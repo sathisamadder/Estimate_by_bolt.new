@@ -288,10 +288,10 @@ export function MobileLayout({
       </header>
 
       {/* Content */}
-      <main className="pb-20">{children}</main>
+      <main className="pb-28">{children}</main>
 
       {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 border-t bg-white/95 backdrop-blur-sm">
+      <div className="fixed bottom-0 left-0 right-0 z-40 border-t bg-white/95 backdrop-blur-sm pb-[env(safe-area-inset-bottom)]">
         <div className="grid grid-cols-4 gap-1 p-2">
           {navigationItems.map((item) => {
             const IconComponent = item.icon;
@@ -320,7 +320,7 @@ export function MobileLayout({
       {/* Floating Action Button */}
       <Button
         size="lg"
-        className="fixed bottom-20 right-4 z-30 w-14 h-14 rounded-full bg-brand-500 hover:bg-brand-600 shadow-lg"
+        className="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full bg-brand-500 hover:bg-brand-600 shadow-lg"
         onClick={onAddItem}
       >
         <Plus className="h-6 w-6" />
