@@ -755,7 +755,7 @@ export default function Index() {
 
   // Desktop layout
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-amber-50">
+    <div className="min-h-screen gpt5-gradient">
       {/* Desktop Header */}
       <header className="border-b bg-white/80 backdrop-blur-sm shadow-sm">
         <div className="container mx-auto px-6 py-4">
