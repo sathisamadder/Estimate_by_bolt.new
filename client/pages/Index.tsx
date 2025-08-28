@@ -58,6 +58,8 @@ const CONSTRUCTION_ITEMS = {
     items: [
       { id: "pile", name: "Pile Foundation", unit: "cft" },
       { id: "footing", name: "Isolated Footing", unit: "cft" },
+      { id: "combined_footing", name: "Combined Footing", unit: "cft" },
+      { id: "strap_footing", name: "Strap Footing", unit: "cft" },
       { id: "strip_footing", name: "Strip Footing", unit: "cft" },
       { id: "raft", name: "Raft Foundation", unit: "cft" },
       { id: "retaining_wall", name: "Retaining Wall", unit: "cft" },
