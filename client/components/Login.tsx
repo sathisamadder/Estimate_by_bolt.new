@@ -155,11 +155,6 @@ export function Login() {
                   ? "Already have an account? Sign in"
                   : "Don't have an account? Create one"}
               </button>
-              <div>
-                <Button type="button" variant="outline" className="w-full" onClick={() => loginAnonymously().catch(() => enableGuest())}>
-                  Continue as guest
-                </Button>
-              </div>
             </div>
           </form>
         </CardContent>
