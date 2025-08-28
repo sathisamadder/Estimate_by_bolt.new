@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
   onAuthStateChanged,
+  signInAnonymously,
   User,
 } from "firebase/auth";
 import { auth } from "@/lib/firebase";
@@ -12,6 +13,7 @@ interface AuthContextType {
   currentUser: User | null;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string) => Promise<void>;
+  loginAnonymously: () => Promise<void>;
   logout: () => Promise<void>;
   loading: boolean;
 }
@@ -38,6 +40,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await createUserWithEmailAndPassword(auth, email, password);
   };
 
+  const loginAnonymously = async () => {
+    await signInAnonymously(auth);
+  };
+
   const logout = async () => {
     await firebaseSignOut(auth);
   };
@@ -55,6 +61,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     currentUser,
     login,
     register,
+    loginAnonymously,
     logout,
     loading,
   };
