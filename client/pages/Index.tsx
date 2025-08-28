@@ -1138,7 +1138,7 @@ export default function Index() {
                       />
                     </div>
                     <div>
-                      <Label htmlFor="thickness">Thickness (ft)</Label>
+                      <Label htmlFor="thickness">Thickness ({getUnitLabel(formData.type,'thickness')})</Label>
                       <Input
                         id="thickness"
                         type="number"
