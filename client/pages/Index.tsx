@@ -814,7 +814,7 @@ export default function Index() {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-brand-500 to-brand-600 rounded-xl">
+              <div className="flex items-center justify-center w-12 h-12 bg-white rounded-xl ring-1 ring-black/5">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2F46361fbad51e408b89450daa00371588"
                   alt="ROY Logo"
