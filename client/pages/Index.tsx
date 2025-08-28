@@ -1299,7 +1299,7 @@ export default function Index() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="width">Width (ft) *</Label>
+                  <Label htmlFor="width">Width ({getUnitLabel(formData.type,'width')}) *</Label>
                   <Input
                     id="width"
                     type="number"
