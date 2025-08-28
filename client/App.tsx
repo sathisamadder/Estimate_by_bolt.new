@@ -13,8 +13,8 @@ import NotFound from "./pages/NotFound";
 
 // Protected Route Component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { currentUser } = useAuth();
-  return currentUser ? <>{children}</> : <Login />;
+  const { currentUser, guestMode } = useAuth();
+  return currentUser || guestMode ? <>{children}</> : <Login />;
 }
 
 const queryClient = new QueryClient();
