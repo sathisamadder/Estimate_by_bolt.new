@@ -21,7 +21,7 @@ export function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { login, register, loginAnonymously } = useAuth();
+  const { login, register, loginAnonymously, enableGuest } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -156,7 +156,7 @@ export function Login() {
                   : "Don't have an account? Create one"}
               </button>
               <div>
-                <Button type="button" variant="outline" className="w-full" onClick={() => loginAnonymously()}>
+                <Button type="button" variant="outline" className="w-full" onClick={() => loginAnonymously().catch(() => enableGuest())}>
                   Continue as guest
                 </Button>
               </div>
