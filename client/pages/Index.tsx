@@ -837,7 +837,7 @@ export default function Index() {
             <div>
               <h2 className="text-3xl font-bold text-gray-900">{projectName}</h2>
               <p className="text-gray-600">
-                {projectSummary.totalItems} items • {formatBDT(projectSummary.totalCost)} total
+                {projectSummary.totalItems} items • {formatBDT(totals.grandTotal)} total
               </p>
             </div>
             <div className="flex items-center space-x-3">
