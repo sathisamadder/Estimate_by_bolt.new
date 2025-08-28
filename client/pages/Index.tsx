@@ -108,6 +108,15 @@ const CONSTRUCTION_ITEMS = {
       { id: "electrical", name: "Electrical Work", unit: "point" },
       { id: "hvac", name: "HVAC Work", unit: "point" },
     ]
+  },
+  custom: {
+    label: "Custom",
+    icon: Package,
+    color: "text-pink-600",
+    bgColor: "bg-pink-50",
+    items: [
+      { id: "custom", name: "Custom Item", unit: "unit" }
+    ]
   }
 };
 
@@ -171,7 +180,7 @@ export default function Index() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [sortBy, setSortBy] = useState("date");
-  const [projectName, setProjectName] = useState("New Construction Project");
+  const [projectName, setProjectName] = useState("Sathisamadder - Estimates 20");
   const [clientInfo, setClientInfo] = useState({
     name: "",
     email: "",
@@ -305,7 +314,15 @@ export default function Index() {
 
   // Add new item
   const handleAddItem = useCallback(() => {
-    if (!formData.type || !formData.length || !formData.width || !formData.height) {
+    if (!formData.type) {
+      toast({
+        title: "Select Item Type",
+        description: "Please choose an item type.",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (!formData.length || !formData.width || !formData.height) {
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields.",
