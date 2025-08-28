@@ -81,7 +81,7 @@ export function MobileLayout({
                   {/* Menu Header */}
                   <div className="p-6 border-b bg-gradient-to-r from-brand-500 to-brand-600">
                     <div className="flex items-center space-x-3">
-                      <div className="flex items-center justify-center w-10 h-10 bg-white/20 rounded-lg">
+                      <div className="flex items-center justify-center w-10 h-10 bg-white rounded-lg ring-1 ring-black/5">
                         <img
                           src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2F46361fbad51e408b89450daa00371588"
                           alt="ROY Logo"
@@ -221,7 +221,7 @@ export function MobileLayout({
             </Sheet>
 
             <div className="flex items-center space-x-2">
-              <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-brand-500 to-brand-600 rounded-lg">
+              <div className="flex items-center justify-center w-8 h-8 bg-white rounded-lg ring-1 ring-black/5">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2F46361fbad51e408b89450daa00371588"
                   alt="ROY Logo"
