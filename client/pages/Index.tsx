@@ -152,6 +152,8 @@ interface EstimateItem {
     steel: number;
   };
   volume: number;
+  area?: number;
+  subtotal?: number;
   totalCost: number;
   createdAt: string;
   isMultiple: boolean;
