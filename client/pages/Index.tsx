@@ -1288,7 +1288,7 @@ export default function Index() {
                 </div>
 
                 <div>
-                  <Label htmlFor="length">Length (ft) *</Label>
+                  <Label htmlFor="length">Length ({getUnitLabel(formData.type,'length')}) *</Label>
                   <Input
                     id="length"
                     type="number"
