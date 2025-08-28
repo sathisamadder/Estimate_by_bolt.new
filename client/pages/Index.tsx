@@ -47,6 +47,7 @@ import {
   Package,
   Clock,
 } from "lucide-react";
+import { computeItem, getUnitLabel, DEFAULT_RATES as EST_DEFAULT_RATES, findItemDef, computeProjectTotals } from "@/lib/estimation";
 
 // Construction item types with enhanced categorization
 const CONSTRUCTION_ITEMS = {
