@@ -21,7 +21,7 @@ export function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { login, register } = useAuth();
+  const { login, register, loginAnonymously } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -142,7 +142,7 @@ export function Login() {
               {isRegistering ? "Create Account" : "Sign In"}
             </Button>
 
-            <div className="text-center">
+            <div className="text-center space-y-2">
               <button
                 type="button"
                 className="text-sm text-brand-600 hover:text-brand-700"
@@ -155,6 +155,11 @@ export function Login() {
                   ? "Already have an account? Sign in"
                   : "Don't have an account? Create one"}
               </button>
+              <div>
+                <Button type="button" variant="outline" className="w-full" onClick={() => loginAnonymously()}>
+                  Continue as guest
+                </Button>
+              </div>
             </div>
           </form>
         </CardContent>
