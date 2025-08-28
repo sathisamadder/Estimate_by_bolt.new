@@ -972,7 +972,7 @@ export default function Index() {
               <Card>
                 <CardContent className="p-6 text-center">
                   <DollarSign className="h-8 w-8 text-brand-600 mx-auto mb-3" />
-                  <p className="text-2xl font-bold text-brand-600">{formatBDT(projectSummary.totalCost)}</p>
+                  <p className="text-2xl font-bold text-brand-600">{formatBDT(totals.grandTotal)}</p>
                   <p className="text-gray-600">Total Cost</p>
                 </CardContent>
               </Card>
