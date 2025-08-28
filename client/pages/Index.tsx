@@ -172,7 +172,13 @@ export default function Index() {
   const [filterCategory, setFilterCategory] = useState("all");
   const [sortBy, setSortBy] = useState("date");
   const [projectName, setProjectName] = useState("New Construction Project");
-  
+  const [clientInfo, setClientInfo] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
+
   const { toast } = useToast();
   const isMobile = useIsMobile();
   const { currentUser, logout } = useAuth();
@@ -199,6 +205,7 @@ export default function Index() {
     const savedItems = localStorage.getItem("construction-items");
     const savedRates = localStorage.getItem("custom-rates");
     const savedProject = localStorage.getItem("project-name");
+    const savedClient = localStorage.getItem("client-info");
     
     if (savedItems) {
       try {
@@ -219,6 +226,14 @@ export default function Index() {
     if (savedProject) {
       setProjectName(savedProject);
     }
+
+    if (savedClient) {
+      try {
+        setClientInfo(JSON.parse(savedClient));
+      } catch (error) {
+        console.error("Error loading client info:", error);
+      }
+    }
   }, []);
 
   // Save data to localStorage
@@ -226,11 +241,12 @@ export default function Index() {
     localStorage.setItem("construction-items", JSON.stringify(items));
     localStorage.setItem("custom-rates", JSON.stringify(customRates));
     localStorage.setItem("project-name", projectName);
+    localStorage.setItem("client-info", JSON.stringify(clientInfo));
     toast({
       title: "Project Saved",
       description: "Your project data has been saved locally.",
     });
-  }, [items, customRates, projectName, toast]);
+  }, [items, customRates, projectName, clientInfo, toast]);
 
   // Calculate materials and cost for an item
   const calculateItem = useCallback((data: any) => {
@@ -527,6 +543,7 @@ export default function Index() {
       summary: projectSummary,
       items: items,
       customRates,
+      client: clientInfo,
       exportedAt: new Date().toISOString(),
     };
 
@@ -571,6 +588,25 @@ export default function Index() {
         itemCount={projectSummary.totalItems}
       >
         <div className="p-4 space-y-4">
+          {activeTab === "client" && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Client Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Input placeholder="Client name" value={clientInfo.name} onChange={(e)=>setClientInfo(prev=>({...prev,name:e.target.value}))} />
+                <Input placeholder="Email" type="email" value={clientInfo.email} onChange={(e)=>setClientInfo(prev=>({...prev,email:e.target.value}))} />
+                <Input placeholder="Phone" value={clientInfo.phone} onChange={(e)=>setClientInfo(prev=>({...prev,phone:e.target.value}))} />
+                <Textarea placeholder="Address" value={clientInfo.address} onChange={(e)=>setClientInfo(prev=>({...prev,address:e.target.value}))} />
+                <Separator />
+                <Label htmlFor="projectName">Project Name</Label>
+                <Input id="projectName" value={projectName} onChange={(e)=>setProjectName(e.target.value)} />
+                <div className="text-sm text-gray-700">Total Estimate: <span className="font-semibold text-brand-700">{formatBDT(projectSummary.totalCost)}</span></div>
+                <Button className="bg-brand-500 hover:bg-brand-600" onClick={saveData}>Save Client & Project</Button>
+              </CardContent>
+            </Card>
+          )}
+
           {activeTab === "items" && (
             <div className="space-y-4">
               {/* Search and Filter Bar */}
@@ -834,7 +870,11 @@ export default function Index() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="client" className="flex items-center space-x-2">
+              <User className="h-4 w-4" />
+              <span>Client</span>
+            </TabsTrigger>
             <TabsTrigger value="items" className="flex items-center space-x-2">
               <Building2 className="h-4 w-4" />
               <span>Project Items</span>
