@@ -330,6 +330,8 @@ export default function Index() {
       },
       materials: calculations.materials,
       volume: calculations.volume,
+      area: calculations.plasterArea,
+      subtotal: calculations.subtotal,
       totalCost: calculations.totalCost,
       createdAt: new Date().toISOString(),
       isMultiple: formData.isMultiple,
