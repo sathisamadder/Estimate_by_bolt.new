@@ -32,6 +32,13 @@ export interface EstimationRates {
   overheadPercent: number; // % on subtotal
   profitPercent: number; // % on subtotal
   taxPercent: number; // % on (subtotal + overhead + profit)
+  // Mix and conversion parameters
+  dryFactor: number; // dry volume factor (e.g., 1.54)
+  cementBagVolumeCft: number; // cft per bag (e.g., 1.25)
+  concreteMix: { c: number; s: number; a: number }; // e.g., 1:1.5:3
+  mortarMix: { c: number; s: number }; // e.g., 1:5
+  brickPerCft: number; // nos per cft of wall volume
+  steelFactor: number; // multiplier for steel coefficients
 }
 
 export const DEFAULT_RATES: EstimationRates = {
@@ -45,6 +52,12 @@ export const DEFAULT_RATES: EstimationRates = {
   overheadPercent: 10,
   profitPercent: 7,
   taxPercent: 5,
+  dryFactor: 1.54,
+  cementBagVolumeCft: 1.25,
+  concreteMix: { c: 1, s: 1.5, a: 3 },
+  mortarMix: { c: 1, s: 5 },
+  brickPerCft: 15,
+  steelFactor: 1,
 };
 
 export const CATEGORIES: Record<string, Category> = {
@@ -210,20 +223,44 @@ export function computeItem(itemId: string, dim: DimensionsInput, rates: Estimat
   area *= multiplier;
   bricks *= multiplier;
 
-  // Base materials before wastage
-  const base = def || { cement: 0.35, sand: 1.5, aggregate: 3.0, steel: 120, mode: "volume" as Mode };
-  let cement = volume * base.cement;
-  let sand = volume * base.sand;
-  let aggregate = volume * base.aggregate;
-  let steel = volume * base.steel;
-
-  if (def && def.mode === "wall") {
-    cement = cement || volume * 0.12;
-    sand = sand || volume * 0.45;
-    aggregate = 0;
-  }
-  if (def && def.id === "paint") {
-    cement = 0; sand = 0; aggregate = 0; steel = 0;
+  // Base materials before wastage using mix ratios
+  let cement = 0;
+  let sand = 0;
+  let aggregate = 0;
+  let steel = 0;
+  if (def) {
+    if (def.mode === "volume" || def.id === "retaining_wall") {
+      const dry = volume * (rates.dryFactor || 1.54);
+      const sum = (rates.concreteMix?.c || 1) + (rates.concreteMix?.s || 1.5) + (rates.concreteMix?.a || 3);
+      const cementVol = dry * (rates.concreteMix?.c || 1) / sum;
+      cement = cementVol / (rates.cementBagVolumeCft || 1.25);
+      sand = dry * (rates.concreteMix?.s || 1.5) / sum;
+      aggregate = dry * (rates.concreteMix?.a || 3) / sum;
+      steel = volume * (def.steel || 0) * (rates.steelFactor || 1);
+    } else if (def.mode === "wall") {
+      const wallBricks = (rates.brickPerCft || def.brickPerCft || 0) * volume;
+      const dry = volume * (rates.dryFactor || 1.54);
+      const sum = (rates.mortarMix?.c || 1) + (rates.mortarMix?.s || 5);
+      const cementVol = dry * (rates.mortarMix?.c || 1) / sum;
+      cement = cementVol / (rates.cementBagVolumeCft || 1.25);
+      sand = dry * (rates.mortarMix?.s || 5) / sum;
+      aggregate = 0;
+      bricks = wallBricks;
+      steel = (def.steel || 0) * volume * (rates.steelFactor || 1);
+    } else if (def.mode === "area") {
+      // Thin layer materials using mortar mix where applicable (e.g., plaster/tiles bedding)
+      if (def.id === "paint") {
+        cement = 0; sand = 0; aggregate = 0; steel = 0;
+      } else {
+        const dry = volume * (rates.dryFactor || 1.54);
+        const sum = (rates.mortarMix?.c || 1) + (rates.mortarMix?.s || 5);
+        const cementVol = dry * (rates.mortarMix?.c || 1) / sum;
+        cement = cementVol / (rates.cementBagVolumeCft || 1.25);
+        sand = dry * (rates.mortarMix?.s || 5) / sum;
+        aggregate = 0;
+        steel = 0;
+      }
+    }
   }
 
   // Apply wastage on materials (not labor)
