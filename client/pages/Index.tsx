@@ -597,7 +597,7 @@ export default function Index() {
                 <Separator />
                 <Label htmlFor="projectName">Project Name</Label>
                 <Input id="projectName" value={projectName} onChange={(e)=>setProjectName(e.target.value)} />
-                <div className="text-sm text-gray-700">Total Estimate: <span className="font-semibold text-brand-700">{formatBDT(projectSummary.totalCost)}</span></div>
+                <div className="text-sm text-gray-700">Total Estimate: <span className="font-semibold text-brand-700">{formatBDT(totals.grandTotal)}</span></div>
                 <Button className="bg-brand-500 hover:bg-brand-600" onClick={saveData}>Save Client & Project</Button>
               </CardContent>
             </Card>
