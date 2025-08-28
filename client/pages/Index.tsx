@@ -335,7 +335,7 @@ export default function Index() {
     const categoryInfo = Object.values(CONSTRUCTION_ITEMS).find(cat =>
       cat.items.some(item => item.id === formData.type)
     );
-    const itemInfo = categoryInfo?.items.find(item => item.id === formData.type);
+    const itemInfo = categoryInfo?.items.find(item => item.id === formData.type) || { id: "custom", name: "Custom Item", unit: "unit" } as any;
 
     const newItem: EstimateItem = {
       id: Date.now().toString(),
@@ -423,7 +423,7 @@ export default function Index() {
     const categoryInfo = Object.values(CONSTRUCTION_ITEMS).find(cat =>
       cat.items.some(item => item.id === formData.type)
     );
-    const itemInfo = categoryInfo?.items.find(item => item.id === formData.type);
+    const itemInfo = categoryInfo?.items.find(item => item.id === formData.type) || { id: "custom", name: "Custom Item", unit: "unit" } as any;
 
     const updatedItem: EstimateItem = {
       ...editingItem,
