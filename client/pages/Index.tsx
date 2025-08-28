@@ -468,16 +468,18 @@ export default function Index() {
     totalItems: items.length,
     totalVolume: items.reduce((sum, item) => sum + item.volume, 0),
     totalSteel: items.reduce((sum, item) => sum + item.materials.steel, 0),
-    totalCost: items.reduce((sum, item) => sum + item.totalCost, 0),
+    totalCost: items.reduce((sum, item) => sum + (item.subtotal ?? item.totalCost), 0),
     categoryBreakdown: items.reduce((acc, item) => {
       if (!acc[item.category]) {
         acc[item.category] = { items: 0, cost: 0 };
       }
       acc[item.category].items += 1;
-      acc[item.category].cost += item.totalCost;
+      acc[item.category].cost += (item.subtotal ?? item.totalCost);
       return acc;
     }, {} as Record<string, { items: number; cost: number }>),
   };
+
+  const totals = computeProjectTotals(items.map(i => i.subtotal ?? i.totalCost), customRates as any);
 
   // Format currency
   const formatBDT = (amount: number) => {
