@@ -259,7 +259,7 @@ export default function Index() {
     });
   }, [items, customRates, projectName, clientInfo, toast]);
 
-  // Calculate materials and cost for an item
+  // Calculate materials and cost for an item (per-type coefficients)
   const calculateItem = useCallback((data: any) => {
     const length = parseFloat(data.length) || 0;
     const width = parseFloat(data.width) || 0;
@@ -268,20 +268,67 @@ export default function Index() {
     const quantity = parseFloat(data.quantity) || 1;
     const multipleQty = data.isMultiple ? parseFloat(data.multipleQuantity) || 1 : 1;
 
+    type Mode = "volume" | "wall" | "area";
+    const COEFF: Record<string, { cement: number; sand: number; aggregate: number; steel: number; mode: Mode; defaultThickness?: number; brickPerCft?: number }> = {
+      // Structure
+      column: { cement: 0.38, sand: 1.5, aggregate: 2.8, steel: 180, mode: "volume" },
+      beam: { cement: 0.36, sand: 1.5, aggregate: 2.8, steel: 160, mode: "volume" },
+      slab: { cement: 0.32, sand: 1.4, aggregate: 2.4, steel: 90, mode: "volume", defaultThickness: 0.5 },
+      stair: { cement: 0.35, sand: 1.5, aggregate: 3.0, steel: 120, mode: "volume" },
+      lintel: { cement: 0.34, sand: 1.5, aggregate: 2.8, steel: 80, mode: "volume" },
+      // Foundation
+      footing: { cement: 0.35, sand: 1.5, aggregate: 3.0, steel: 100, mode: "volume" },
+      combined_footing: { cement: 0.35, sand: 1.5, aggregate: 3.0, steel: 110, mode: "volume" },
+      strap_footing: { cement: 0.35, sand: 1.5, aggregate: 3.0, steel: 110, mode: "volume" },
+      strip_footing: { cement: 0.34, sand: 1.5, aggregate: 2.9, steel: 110, mode: "volume" },
+      raft: { cement: 0.36, sand: 1.6, aggregate: 3.1, steel: 110, mode: "volume" },
+      pile: { cement: 0.38, sand: 1.6, aggregate: 3.2, steel: 200, mode: "volume" },
+      retaining_wall: { cement: 0.36, sand: 1.6, aggregate: 3.1, steel: 140, mode: "wall", defaultThickness: 0.75, brickPerCft: 0 },
+      // Masonry
+      brick_wall: { cement: 0.0, sand: 0.0, aggregate: 0.0, steel: 0, mode: "wall", defaultThickness: 0.33, brickPerCft: 500 },
+      block_wall: { cement: 0.0, sand: 0.0, aggregate: 0.0, steel: 0, mode: "wall", defaultThickness: 0.5, brickPerCft: 280 },
+      partition: { cement: 0.0, sand: 0.0, aggregate: 0.0, steel: 0, mode: "wall", defaultThickness: 0.25, brickPerCft: 450 },
+      // Finishes (area-based proxy via thin volume)
+      plaster: { cement: 0.35, sand: 1.5, aggregate: 0.0, steel: 0, mode: "area", defaultThickness: 0.05 },
+      tiles: { cement: 0.25, sand: 1.0, aggregate: 0.0, steel: 0, mode: "area", defaultThickness: 0.03 },
+      paint: { cement: 0.0, sand: 0.0, aggregate: 0.0, steel: 0, mode: "area", defaultThickness: 0.0 },
+    };
+
+    const coeff = COEFF[data.type as keyof typeof COEFF];
+
     let volume = 0;
     let brickQuantity = 0;
     let plasterArea = 0;
 
-    // Calculate volume based on item type
-    if (data.type === "brick_wall" || data.type === "block_wall" || data.type === "partition") {
-      volume = length * height * (thickness || 0.33); // Default 4" wall
-      brickQuantity = volume * 500; // Approx 500 bricks per cft
-      plasterArea = length * height * 2; // Both sides
-    } else if (data.type === "plaster" || data.type === "tiles" || data.type === "paint") {
-      plasterArea = length * width;
-      volume = plasterArea * 0.05; // 0.6" thick plaster
+    if (coeff) {
+      if (coeff.mode === "wall") {
+        const t = thickness || coeff.defaultThickness || 0.33;
+        volume = length * height * t;
+        brickQuantity = (coeff.brickPerCft || 0) * volume;
+        plasterArea = length * height * 2;
+      } else if (coeff.mode === "area") {
+        plasterArea = length * width;
+        const t = coeff.defaultThickness ?? 0.05;
+        volume = plasterArea * t;
+      } else {
+        const depth = coeff.defaultThickness ? (thickness || coeff.defaultThickness) : thickness || height;
+        volume = length * width * (depth || 0);
+        if (!depth) {
+          volume = length * width * height;
+        }
+      }
     } else {
-      volume = length * width * height;
+      // Fallback generic calculation
+      if (data.type === "brick_wall" || data.type === "block_wall" || data.type === "partition") {
+        volume = length * height * (thickness || 0.33);
+        brickQuantity = volume * 500;
+        plasterArea = length * height * 2;
+      } else if (data.type === "plaster" || data.type === "tiles" || data.type === "paint") {
+        plasterArea = length * width;
+        volume = plasterArea * 0.05;
+      } else {
+        volume = length * width * height;
+      }
     }
 
     // Apply quantity multiplier
@@ -289,19 +336,35 @@ export default function Index() {
     brickQuantity *= quantity * multipleQty;
     plasterArea *= quantity * multipleQty;
 
-    // Calculate materials
-    const cement = volume * 0.35; // bags
-    const sand = volume * 1.5; // cft
-    const aggregate = volume * 3; // cft
-    const steel = volume * 120; // kg (average reinforcement)
+    // Materials via coefficients or defaults
+    const base = coeff || { cement: 0.35, sand: 1.5, aggregate: 3.0, steel: 120, mode: "volume" as Mode };
+    let cement = volume * base.cement;
+    let sand = volume * base.sand;
+    let aggregate = volume * base.aggregate;
+    let steel = volume * base.steel;
 
-    // Calculate costs
+    // Masonry mortar allowance for brick/block walls if coefficients set to 0
+    if (coeff && coeff.mode === "wall") {
+      // Simple mortar proxy on wall volume
+      cement = cement || volume * 0.12;
+      sand = sand || volume * 0.45;
+      aggregate = aggregate || 0;
+      // steel remains from coeff
+    }
+
+    // Paint: no base materials, only labor proxy on area
+    if (data.type === "paint") {
+      cement = 0; sand = 0; aggregate = 0; steel = 0;
+    }
+
+    // Costs
     const cementCost = cement * customRates.cement;
     const sandCost = sand * customRates.sand;
     const aggregateCost = aggregate * customRates.aggregate;
     const brickCost = brickQuantity * customRates.brick;
     const steelCost = steel * customRates.steel;
-    const laborCost = volume * customRates.labor * 0.5; // Labor factor
+    const laborBasis = coeff && coeff.mode === "area" ? plasterArea || volume : volume;
+    const laborCost = laborBasis * customRates.labor * 0.5;
 
     const totalCost = cementCost + sandCost + aggregateCost + brickCost + steelCost + laborCost;
 
