@@ -419,6 +419,8 @@ export default function Index() {
       },
       materials: calculations.materials,
       volume: calculations.volume,
+      area: calculations.plasterArea,
+      subtotal: calculations.subtotal,
       totalCost: calculations.totalCost,
       isMultiple: formData.isMultiple,
       multipleQuantity: parseFloat(formData.multipleQuantity),
