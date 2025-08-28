@@ -124,14 +124,7 @@ const CONSTRUCTION_ITEMS = {
 };
 
 // Default material rates (BDT)
-const DEFAULT_RATES = {
-  cement: 650,      // per bag
-  sand: 1200,       // per cft
-  aggregate: 1800,  // per cft
-  brick: 12,        // per piece
-  steel: 85,        // per kg
-  labor: 800,       // per day
-};
+const DEFAULT_RATES = EST_DEFAULT_RATES as const;
 
 interface EstimateItem {
   id: string;
