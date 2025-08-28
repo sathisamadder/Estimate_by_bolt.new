@@ -36,6 +36,7 @@ interface MobileLayoutProps {
 }
 
 const navigationItems = [
+  { id: "client", label: "Client", icon: User },
   { id: "items", label: "Project Items", icon: Building2 },
   { id: "summary", label: "Cost Analysis", icon: BarChart3 },
   { id: "details", label: "Detailed Report", icon: FileText },
