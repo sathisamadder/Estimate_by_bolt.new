@@ -1102,7 +1102,7 @@ export default function Index() {
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="length">Length (ft) *</Label>
+                      <Label htmlFor="length">Length ({getUnitLabel(formData.type,'length')}) *</Label>
                       <Input
                         id="length"
                         type="number"
