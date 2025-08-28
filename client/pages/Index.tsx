@@ -1311,7 +1311,7 @@ export default function Index() {
                 </div>
 
                 <div>
-                  <Label htmlFor="height">Height (ft) *</Label>
+                  <Label htmlFor="height">Height ({getUnitLabel(formData.type,'height')}) *</Label>
                   <Input
                     id="height"
                     type="number"
