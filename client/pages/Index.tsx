@@ -580,7 +580,7 @@ export default function Index() {
         onExport={handleExport}
         onPrint={handlePrint}
         projectName={projectName}
-        totalCost={formatBDT(projectSummary.totalCost)}
+        totalCost={formatBDT(totals.grandTotal)}
         itemCount={projectSummary.totalItems}
       >
         <div className="p-4 space-y-4">
