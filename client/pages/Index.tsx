@@ -688,7 +688,7 @@ export default function Index() {
                     </div>
                     <div className="text-center p-3 bg-brand-50 rounded-lg">
                       <DollarSign className="h-6 w-6 text-brand-600 mx-auto mb-1" />
-                      <p className="text-lg font-bold text-brand-600">{formatBDT(projectSummary.totalCost)}</p>
+                      <p className="text-lg font-bold text-brand-600">{formatBDT(totals.grandTotal)}</p>
                       <p className="text-sm text-gray-600">Total Cost</p>
                     </div>
                   </div>
