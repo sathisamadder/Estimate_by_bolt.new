@@ -285,19 +285,22 @@ export default function Index() {
   // Add new item
   const handleAddItem = useCallback(() => {
     if (!formData.type) {
-      toast({
-        title: "Select Item Type",
-        description: "Please choose an item type.",
-        variant: "destructive",
-      });
+      toast({ title: "Select Item Type", description: "Please choose an item type.", variant: "destructive" });
       return;
     }
-    if (!formData.length || !formData.width || !formData.height) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
-      });
+
+    const def = findItemDef(formData.type);
+    const has = (v: string) => v !== "" && !isNaN(parseFloat(v));
+    let valid = false;
+    if (def?.mode === "wall") {
+      valid = has(formData.length) && has(formData.height);
+    } else if (def?.mode === "area") {
+      valid = has(formData.length) && has(formData.width);
+    } else {
+      valid = has(formData.length) && has(formData.width) && (has(formData.height) || has(formData.thickness || ""));
+    }
+    if (!valid) {
+      toast({ title: "Missing Information", description: "Dimensions incomplete for selected item.", variant: "destructive" });
       return;
     }
 
