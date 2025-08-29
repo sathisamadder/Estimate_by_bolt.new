@@ -56,7 +56,7 @@ export const DEFAULT_RATES: EstimationRates = {
   cementBagVolumeCft: 1.25,
   concreteMix: { c: 1, s: 1.5, a: 3 },
   mortarMix: { c: 1, s: 5 },
-  brickPerCft: 15,
+  brickPerCft: 11.43,
   steelFactor: 1,
 };
 
@@ -64,13 +64,17 @@ export const CATEGORIES: Record<string, Category> = {
   foundation: {
     label: "Foundation Works",
     items: [
-      { id: "pile", name: "Pile Foundation", unit: "cft", mode: "volume", cement: 0.38, sand: 1.6, aggregate: 3.2, steel: 200 },
+      { id: "pile", name: "Pile", unit: "cft", mode: "volume", cement: 0.38, sand: 1.6, aggregate: 3.2, steel: 200 },
+      { id: "pile_cap", name: "Pile Cap", unit: "cft", mode: "volume", cement: 0.35, sand: 1.5, aggregate: 3.0, steel: 110, defaultThickness: 2.0 },
+      { id: "mat_foundation", name: "Mat Foundation", unit: "cft", mode: "volume", cement: 0.36, sand: 1.6, aggregate: 3.1, steel: 110, defaultThickness: 1.5 },
       { id: "footing", name: "Isolated Footing", unit: "cft", mode: "volume", cement: 0.35, sand: 1.5, aggregate: 3.0, steel: 100 },
       { id: "combined_footing", name: "Combined Footing", unit: "cft", mode: "volume", cement: 0.35, sand: 1.5, aggregate: 3.0, steel: 110 },
       { id: "strap_footing", name: "Strap Footing", unit: "cft", mode: "volume", cement: 0.35, sand: 1.5, aggregate: 3.0, steel: 110 },
       { id: "strip_footing", name: "Strip Footing", unit: "cft", mode: "volume", cement: 0.34, sand: 1.5, aggregate: 2.9, steel: 110 },
-      { id: "raft", name: "Raft Foundation", unit: "cft", mode: "volume", cement: 0.36, sand: 1.6, aggregate: 3.1, steel: 110 },
+      { id: "raft", name: "Raft Foundation", unit: "cft", mode: "volume", cement: 0.36, sand: 1.6, aggregate: 3.1, steel: 110, defaultThickness: 1.5 },
       { id: "retaining_wall", name: "Retaining Wall", unit: "sft", mode: "wall", cement: 0.0, sand: 0.0, aggregate: 0.0, steel: 140, defaultThickness: 0.75, brickPerCft: 0 },
+      { id: "water_reservoir", name: "UG Water Reservoir", unit: "cft", mode: "volume", cement: 0.0, sand: 0.0, aggregate: 0.0, steel: 0, defaultThickness: 0.58 },
+      { id: "septic_tank", name: "Septic Tank", unit: "cft", mode: "volume", cement: 0.0, sand: 0.0, aggregate: 0.0, steel: 0, defaultThickness: 0.83 },
     ],
   },
   structure: {
@@ -78,9 +82,11 @@ export const CATEGORIES: Record<string, Category> = {
     items: [
       { id: "column", name: "Column", unit: "cft", mode: "volume", cement: 0.38, sand: 1.5, aggregate: 2.8, steel: 180 },
       { id: "beam", name: "Beam", unit: "cft", mode: "volume", cement: 0.36, sand: 1.5, aggregate: 2.8, steel: 160 },
-      { id: "slab", name: "Slab", unit: "cft", mode: "volume", cement: 0.32, sand: 1.4, aggregate: 2.4, steel: 90, defaultThickness: 0.5 },
-      { id: "stair", name: "Staircase", unit: "cft", mode: "volume", cement: 0.35, sand: 1.5, aggregate: 3.0, steel: 120 },
+      { id: "slab", name: "Slab", unit: "cft", mode: "volume", cement: 0.32, sand: 1.4, aggregate: 2.4, steel: 90, defaultThickness: 0.42 },
+      { id: "stair", name: "Stair", unit: "cft", mode: "volume", cement: 0.35, sand: 1.5, aggregate: 3.0, steel: 120 },
       { id: "lintel", name: "Lintel", unit: "cft", mode: "volume", cement: 0.34, sand: 1.5, aggregate: 2.8, steel: 80 },
+      { id: "lift_core", name: "Lift Core", unit: "cft", mode: "wall", cement: 0, sand: 0, aggregate: 0, steel: 0, defaultThickness: 0.67 },
+      { id: "overhead_tank", name: "Overhead Tank", unit: "cft", mode: "volume", cement: 0, sand: 0, aggregate: 0, steel: 0, defaultThickness: 0.67 },
     ],
   },
   masonry: {
@@ -196,21 +202,72 @@ export function computeItem(itemId: string, dim: DimensionsInput, rates: Estimat
   let bricks = 0;
 
   if (def) {
-    if (def.mode === "wall") {
-      const t = safe.thickness || def.defaultThickness || 0.33;
-      area = safe.length * safe.height; // sft one face
-      volume = area * t;
-      bricks = (def.brickPerCft || 0) * volume;
-    } else if (def.mode === "area") {
-      area = safe.length * (safe.width || 1);
-      const t = def.defaultThickness ?? 0.0;
-      volume = area * t;
-    } else {
-      const depth = def.defaultThickness ? (safe.thickness || def.defaultThickness) : (safe.thickness || safe.height);
-      if (depth) {
-        volume = safe.length * (safe.width || 1) * depth;
-      } else {
-        volume = safe.length * (safe.width || 1) * (safe.height || 1);
+    // Special cases based on PDF
+    switch (def.id) {
+      case "pile": {
+        // width as diameter (ft), height as length (ft)
+        const d = safe.width || 0;
+        const L = safe.height || safe.length;
+        volume = Math.PI * Math.pow(d, 2) / 4 * L;
+        break;
+      }
+      case "water_reservoir": {
+        const tWall = safe.thickness || def.defaultThickness || 0.58; // ~7"
+        const tBot = 0.67; // 8"
+        const tTop = 0.5; // 6"
+        const L = safe.length, W = safe.width, H = safe.height;
+        const walls = 2 * (L + W) * H * tWall;
+        const bottom = L * W * tBot;
+        const top = L * W * tTop;
+        volume = walls + bottom + top;
+        break;
+      }
+      case "overhead_tank": {
+        const tWall = safe.thickness || def.defaultThickness || 0.67; // ~8"
+        const tBot = 0.5; // 6"
+        const tTop = 0.33; // 4"
+        const L = safe.length, W = safe.width, H = safe.height;
+        const walls = 2 * (L + W) * H * tWall;
+        const bottom = L * W * tBot;
+        const top = L * W * tTop;
+        volume = walls + bottom + top;
+        break;
+      }
+      case "septic_tank": {
+        const tWall = safe.thickness || def.defaultThickness || 0.83; // 10"
+        const tBot = 0.67;
+        const tTop = 0.5;
+        const L = safe.length, W = safe.width, H = safe.height;
+        const walls = 2 * (L + W) * H * tWall;
+        const bottom = L * W * tBot;
+        const top = L * W * tTop;
+        volume = walls + bottom + top;
+        break;
+      }
+      case "lift_core": {
+        const t = safe.thickness || def.defaultThickness || 0.67;
+        const L = safe.length, W = safe.width, H = safe.height;
+        volume = 2 * (L + W) * H * t;
+        break;
+      }
+      default: {
+        if (def.mode === "wall") {
+          const t = safe.thickness || def.defaultThickness || 0.33;
+          area = safe.length * safe.height; // sft one face
+          volume = area * t;
+          bricks = (rates.brickPerCft || def.brickPerCft || 0) * volume;
+        } else if (def.mode === "area") {
+          area = safe.length * (safe.width || 1);
+          const t = def.defaultThickness ?? 0.0;
+          volume = area * t;
+        } else {
+          const depth = def.defaultThickness ? (safe.thickness || def.defaultThickness) : (safe.thickness || safe.height);
+          if (depth) {
+            volume = safe.length * (safe.width || 1) * depth;
+          } else {
+            volume = safe.length * (safe.width || 1) * (safe.height || 1);
+          }
+        }
       }
     }
   } else {
