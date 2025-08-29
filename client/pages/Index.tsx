@@ -130,7 +130,7 @@ const CONSTRUCTION_ITEMS = {
 };
 
 // Default material rates (BDT)
-const DEFAULT_RATES = EST_DEFAULT_RATES as const;
+const DEFAULT_RATES = EST_DEFAULT_RATES;
 
 interface EstimateItem {
   id: string;
