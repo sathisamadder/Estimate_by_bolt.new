@@ -76,7 +76,7 @@ export function MobileLayout({
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-80 sm:w-80 w-[85vw] p-0 bg-white/80 backdrop-blur-xl border border-white/40 shadow-2xl">
+              <SheetContent side="left" className="w-80 sm:w-80 w-[86vw] p-0 bg-white/80 backdrop-blur-2xl border border-white/40 shadow-2xl rounded-r-3xl">
                 <div className="flex flex-col h-full">
                   {/* Menu Header */}
                   <div className="p-6 border-b bg-gradient-to-r from-brand-500 to-brand-600">
@@ -280,10 +280,10 @@ export function MobileLayout({
       <main className="px-4 pb-40 pt-2">{children}</main>
 
       {/* Mobile Bottom Navigation - iPhone style */}
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 pb-[env(safe-area-inset-bottom)]">
-        <div className="mx-auto max-w-xl px-3 pb-3">
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 pb-[calc(env(safe-area-inset-bottom)+12px)]">
+        <div className="mx-auto w-full max-w-xl px-4 pb-3">
           <div className="relative">
-            <div className="pointer-events-auto grid grid-cols-5 items-center rounded-3xl bg-white/75 backdrop-blur-2xl shadow-[0_18px_50px_-12px_rgba(0,0,0,0.35)] ring-1 ring-white/60 border border-white/40">
+            <div className="pointer-events-auto grid grid-cols-5 items-center rounded-3xl bg-white/70 backdrop-blur-2xl saturate-150 shadow-[0_18px_50px_-12px_rgba(0,0,0,0.35)] ring-1 ring-white/60 border border-white/40">
               {navigationItems.map((item) => {
                 const IconComponent = item.icon;
                 const isActive = activeTab === item.id;
