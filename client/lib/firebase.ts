@@ -23,8 +23,15 @@ export const db = getFirestore(app);
 // Initialize Auth
 export const auth = getAuth(app);
 
-// Initialize Analytics
-export const analytics =
-  typeof window !== "undefined" ? getAnalytics(app) : null;
+// Initialize Analytics (guard against unsupported environments)
+export const analytics = (() => {
+  if (typeof window === "undefined") return null;
+  try {
+    return getAnalytics(app);
+  } catch (e) {
+    console.warn("Analytics disabled:", e);
+    return null;
+  }
+})();
 
 export default app;

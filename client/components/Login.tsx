@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Calculator, Eye, EyeOff } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function Login() {
   const [email, setEmail] = useState("");
@@ -47,26 +48,34 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-amber-50 flex items-center justify-center p-4">
+    <div className="min-h-screen gpt5-gradient flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
-            <div className="flex items-center justify-center w-16 h-16">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2F46361fbad51e408b89450daa00371588"
-                alt="ROY Logo"
-                className="w-10 h-10 object-contain bg-transparent"
-                style={{ background: "transparent", backdropFilter: "none" }}
-                onError={(e) => {
-                  // Fallback to calculator icon if image fails to load
-                  e.currentTarget.style.display = "none";
-                  e.currentTarget.nextElementSibling?.classList.remove(
-                    "hidden",
-                  );
-                }}
-              />
-              <Calculator className="h-8 w-8 text-brand-500 hidden" />
-            </div>
+            <motion.div
+              className="relative flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-500/10 to-brand-600/10"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              <motion.div
+                animate={{ y: [0, -3, 0] }}
+                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                className="flex items-center justify-center w-12 h-12 rounded-xl bg-white shadow-sm"
+              >
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2F46361fbad51e408b89450daa00371588"
+                  alt="ROY Logo"
+                  className="w-10 h-10 object-contain bg-transparent"
+                  style={{ background: "transparent", backdropFilter: "none" }}
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                    e.currentTarget.nextElementSibling?.classList.remove("hidden");
+                  }}
+                />
+                <Calculator className="h-8 w-8 text-brand-500 hidden" />
+              </motion.div>
+            </motion.div>
           </div>
           <CardTitle className="text-2xl font-bold text-gray-900">
             ROY
@@ -133,7 +142,7 @@ export function Login() {
               {isRegistering ? "Create Account" : "Sign In"}
             </Button>
 
-            <div className="text-center">
+            <div className="text-center space-y-2">
               <button
                 type="button"
                 className="text-sm text-brand-600 hover:text-brand-700"

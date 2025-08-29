@@ -36,6 +36,7 @@ interface MobileLayoutProps {
 }
 
 const navigationItems = [
+  { id: "client", label: "Client", icon: User },
   { id: "items", label: "Project Items", icon: Building2 },
   { id: "summary", label: "Cost Analysis", icon: BarChart3 },
   { id: "details", label: "Detailed Report", icon: FileText },
@@ -64,7 +65,7 @@ export function MobileLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-orange-50 to-amber-50">
+    <div className="min-h-screen gpt5-gradient">
       {/* Mobile Header */}
       <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur-sm shadow-sm">
         <div className="flex items-center justify-between px-4 py-3">
@@ -80,7 +81,7 @@ export function MobileLayout({
                   {/* Menu Header */}
                   <div className="p-6 border-b bg-gradient-to-r from-brand-500 to-brand-600">
                     <div className="flex items-center space-x-3">
-                      <div className="flex items-center justify-center w-10 h-10 bg-white/20 rounded-lg">
+                      <div className="flex items-center justify-center w-10 h-10 bg-white rounded-lg ring-1 ring-black/5">
                         <img
                           src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2F46361fbad51e408b89450daa00371588"
                           alt="ROY Logo"
@@ -220,7 +221,7 @@ export function MobileLayout({
             </Sheet>
 
             <div className="flex items-center space-x-2">
-              <div className="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-brand-500 to-brand-600 rounded-lg">
+              <div className="flex items-center justify-center w-8 h-8 bg-white rounded-lg ring-1 ring-black/5">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2F46361fbad51e408b89450daa00371588"
                   alt="ROY Logo"
@@ -244,19 +245,7 @@ export function MobileLayout({
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm" className="p-2">
-              <Search className="h-5 w-5" />
-            </Button>
-            <Button
-              size="sm"
-              className="bg-brand-500 hover:bg-brand-600 px-3"
-              onClick={onAddItem}
-            >
-              <Plus className="h-4 w-4 mr-1" />
-              Add
-            </Button>
-          </div>
+          <div className="flex items-center space-x-2"></div>
         </div>
 
         {/* Mobile Tab Navigation */}
@@ -288,10 +277,10 @@ export function MobileLayout({
       </header>
 
       {/* Content */}
-      <main className="pb-20">{children}</main>
+      <main className="pb-28">{children}</main>
 
       {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 border-t bg-white/95 backdrop-blur-sm">
+      <div className="fixed bottom-0 left-0 right-0 z-40 border-t bg-white/95 backdrop-blur-sm pb-[env(safe-area-inset-bottom)]">
         <div className="grid grid-cols-4 gap-1 p-2">
           {navigationItems.map((item) => {
             const IconComponent = item.icon;
@@ -320,7 +309,7 @@ export function MobileLayout({
       {/* Floating Action Button */}
       <Button
         size="lg"
-        className="fixed bottom-20 right-4 z-30 w-14 h-14 rounded-full bg-brand-500 hover:bg-brand-600 shadow-lg"
+        className="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full bg-brand-500 hover:bg-brand-600 shadow-lg"
         onClick={onAddItem}
       >
         <Plus className="h-6 w-6" />
