@@ -76,7 +76,10 @@ export function MobileLayout({
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-80 sm:w-80 w-[86vw] p-0 bg-white/80 backdrop-blur-2xl border border-white/40 shadow-2xl rounded-r-3xl">
+              <SheetContent
+                side="left"
+                className="w-80 sm:w-80 w-[86vw] p-0 bg-white/80 backdrop-blur-2xl border border-white/40 shadow-2xl rounded-r-3xl"
+              >
                 <div className="flex flex-col h-full">
                   {/* Menu Header */}
                   <div className="p-6 border-b bg-gradient-to-r from-brand-500 to-brand-600">
@@ -295,9 +298,11 @@ export function MobileLayout({
                     }`}
                     onClick={() => onTabChange(item.id)}
                   >
-                    <span className={`inline-flex items-center justify-center rounded-2xl ${
-                      isActive ? "bg-brand-100" : "bg-transparent"
-                    } p-2`}>
+                    <span
+                      className={`inline-flex items-center justify-center rounded-2xl ${
+                        isActive ? "bg-brand-100" : "bg-transparent"
+                      } p-2`}
+                    >
                       <IconComponent className="h-5 w-5" />
                     </span>
                     <span className="text-[10px] leading-none">
@@ -317,7 +322,6 @@ export function MobileLayout({
           </div>
         </div>
       </div>
-
     </div>
   );
 }

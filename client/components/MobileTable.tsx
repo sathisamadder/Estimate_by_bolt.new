@@ -176,7 +176,10 @@ export function MobileTable({
         const isExpanded = expandedItems.has(item.id);
 
         return (
-          <Card key={item.id} className="shadow-sm bg-white/60 backdrop-blur-xl border-white/50">
+          <Card
+            key={item.id}
+            className="shadow-sm bg-white/60 backdrop-blur-xl border-white/50"
+          >
             <CardContent className="p-4">
               {/* Header Row */}
               <div className="flex items-center justify-between mb-3">

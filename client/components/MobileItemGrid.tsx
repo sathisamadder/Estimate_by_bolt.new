@@ -16,7 +16,11 @@ interface MobileItemGridProps {
   className?: string;
 }
 
-export function MobileItemGrid({ items, onPick, className }: MobileItemGridProps) {
+export function MobileItemGrid({
+  items,
+  onPick,
+  className,
+}: MobileItemGridProps) {
   return (
     <div
       className={cn(
