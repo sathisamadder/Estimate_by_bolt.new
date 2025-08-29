@@ -65,9 +65,9 @@ export function MobileLayout({
   }
 
   return (
-    <div className="min-h-screen gpt5-gradient">
+    <div className="min-h-dvh gpt5-gradient">
       {/* Mobile Header */}
-      <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur-sm shadow-sm">
+      <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur-sm shadow-sm pt-[env(safe-area-inset-top)]">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center space-x-3">
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -76,7 +76,10 @@ export function MobileLayout({
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-80 p-0">
+              <SheetContent
+                side="left"
+                className="w-80 sm:w-80 w-[86vw] p-0 bg-white/80 backdrop-blur-2xl border border-white/40 shadow-2xl rounded-r-3xl"
+              >
                 <div className="flex flex-col h-full">
                   {/* Menu Header */}
                   <div className="p-6 border-b bg-gradient-to-r from-brand-500 to-brand-600">
@@ -249,7 +252,7 @@ export function MobileLayout({
         </div>
 
         {/* Mobile Tab Navigation */}
-        <div className="border-t bg-white">
+        <div className="hidden">
           <div className="overflow-x-auto">
             <div className="flex space-x-1 p-2 min-w-max">
               {navigationItems.map((item) => {
@@ -277,43 +280,48 @@ export function MobileLayout({
       </header>
 
       {/* Content */}
-      <main className="pb-28">{children}</main>
+      <main className="px-4 pb-40 pt-2">{children}</main>
 
-      {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 border-t bg-white/95 backdrop-blur-sm pb-[env(safe-area-inset-bottom)]">
-        <div className="grid grid-cols-4 gap-1 p-2">
-          {navigationItems.map((item) => {
-            const IconComponent = item.icon;
-            return (
-              <Button
-                key={item.id}
-                variant="ghost"
-                size="sm"
-                className={`flex flex-col h-14 space-y-1 ${
-                  activeTab === item.id
-                    ? "text-brand-600 bg-brand-50"
-                    : "text-gray-600"
-                }`}
-                onClick={() => onTabChange(item.id)}
-              >
-                <IconComponent className="h-5 w-5" />
-                <span className="text-xs font-medium leading-none">
-                  {item.label.split(" ")[0]}
-                </span>
-              </Button>
-            );
-          })}
+      {/* Mobile Bottom Navigation - iPhone style */}
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 pb-[calc(env(safe-area-inset-bottom)+12px)]">
+        <div className="mx-auto w-full max-w-xl px-4 pb-3">
+          <div className="relative">
+            <div className="pointer-events-auto grid grid-cols-5 items-center rounded-3xl bg-white/70 backdrop-blur-2xl saturate-150 shadow-[0_18px_50px_-12px_rgba(0,0,0,0.35)] ring-1 ring-white/60 border border-white/40">
+              {navigationItems.map((item) => {
+                const IconComponent = item.icon;
+                const isActive = activeTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    className={`flex flex-col items-center justify-center py-3 gap-1.5 ${
+                      isActive ? "text-brand-600" : "text-gray-600"
+                    }`}
+                    onClick={() => onTabChange(item.id)}
+                  >
+                    <span
+                      className={`inline-flex items-center justify-center rounded-2xl ${
+                        isActive ? "bg-brand-100" : "bg-transparent"
+                      } p-2`}
+                    >
+                      <IconComponent className="h-5 w-5" />
+                    </span>
+                    <span className="text-[10px] leading-none">
+                      {item.label.split(" ")[0]}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <Button
+              size="lg"
+              className="pointer-events-auto absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full bg-brand-500 hover:bg-brand-600 shadow-[0_18px_50px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/60"
+              onClick={onAddItem}
+            >
+              <Plus className="h-6 w-6" />
+            </Button>
+          </div>
         </div>
       </div>
-
-      {/* Floating Action Button */}
-      <Button
-        size="lg"
-        className="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full bg-brand-500 hover:bg-brand-600 shadow-lg"
-        onClick={onAddItem}
-      >
-        <Plus className="h-6 w-6" />
-      </Button>
     </div>
   );
 }

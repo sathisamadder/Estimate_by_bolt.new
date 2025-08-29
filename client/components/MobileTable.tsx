@@ -176,12 +176,15 @@ export function MobileTable({
         const isExpanded = expandedItems.has(item.id);
 
         return (
-          <Card key={item.id} className="shadow-sm">
+          <Card
+            key={item.id}
+            className="shadow-sm bg-white/60 backdrop-blur-xl border-white/50"
+          >
             <CardContent className="p-4">
               {/* Header Row */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-3">
-                  <div className={`p-2 rounded-lg ${item.bgColor}`}>
+                  <div className="w-10 h-10 rounded-full bg-white/60 backdrop-blur-xl ring-1 ring-white/60 shadow-[0_8px_24px_rgba(0,0,0,0.12)] flex items-center justify-center">
                     <IconComponent className={`h-5 w-5 ${item.color}`} />
                   </div>
                   <div>

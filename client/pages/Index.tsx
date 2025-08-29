@@ -32,6 +32,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAuth } from "@/contexts/AuthContext";
 import { MobileLayout } from "@/components/MobileLayout";
+import { MobileItemGrid } from "@/components/MobileItemGrid";
 import { MobileTable } from "@/components/MobileTable";
 import {
   Building2,
@@ -792,6 +793,22 @@ export default function Index() {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Quick pick grid */}
+              <MobileItemGrid
+                items={Object.entries(CONSTRUCTION_ITEMS).flatMap(([_, cat]) =>
+                  cat.items.map((it) => ({
+                    id: it.id,
+                    name: it.name,
+                    icon: cat.icon,
+                    color: (cat as any).color,
+                  })),
+                )}
+                onPick={(id) => {
+                  setFormData((p) => ({ ...p, type: id }));
+                  setIsAddDialogOpen(true);
+                }}
+              />
 
               {/* Items List */}
               <MobileTable

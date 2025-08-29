@@ -48,7 +48,7 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen gpt5-gradient flex items-center justify-center p-4">
+    <div className="min-h-dvh gpt5-gradient flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
@@ -60,7 +60,11 @@ export function Login() {
             >
               <motion.div
                 animate={{ y: [0, -3, 0] }}
-                transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                transition={{
+                  repeat: Infinity,
+                  duration: 3,
+                  ease: "easeInOut",
+                }}
                 className="flex items-center justify-center w-12 h-12 rounded-xl bg-white shadow-sm"
               >
                 <img
@@ -70,7 +74,9 @@ export function Login() {
                   style={{ background: "transparent", backdropFilter: "none" }}
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
-                    e.currentTarget.nextElementSibling?.classList.remove("hidden");
+                    e.currentTarget.nextElementSibling?.classList.remove(
+                      "hidden",
+                    );
                   }}
                 />
                 <Calculator className="h-8 w-8 text-brand-500 hidden" />
