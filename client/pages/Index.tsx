@@ -1119,6 +1119,7 @@ export default function Index() {
                         type="number"
                         step="0.1"
                         placeholder="0.0"
+                        disabled={getUnitLabel(formData.type,'width')==='-'}
                         value={formData.width}
                         onChange={(e) => setFormData(prev => ({ ...prev, width: e.target.value }))}
                       />
@@ -1133,6 +1134,7 @@ export default function Index() {
                         type="number"
                         step="0.1"
                         placeholder="0.0"
+                        disabled={getUnitLabel(formData.type,'height')==='-'}
                         value={formData.height}
                         onChange={(e) => setFormData(prev => ({ ...prev, height: e.target.value }))}
                       />
