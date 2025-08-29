@@ -57,13 +57,17 @@ const CONSTRUCTION_ITEMS = {
     color: "text-blue-600",
     bgColor: "bg-blue-50",
     items: [
-      { id: "pile", name: "Pile Foundation", unit: "cft" },
+      { id: "pile", name: "Pile", unit: "cft" },
+      { id: "pile_cap", name: "Pile Cap", unit: "cft" },
+      { id: "mat_foundation", name: "Mat Foundation", unit: "cft" },
       { id: "footing", name: "Isolated Footing", unit: "cft" },
       { id: "combined_footing", name: "Combined Footing", unit: "cft" },
       { id: "strap_footing", name: "Strap Footing", unit: "cft" },
       { id: "strip_footing", name: "Strip Footing", unit: "cft" },
       { id: "raft", name: "Raft Foundation", unit: "cft" },
-      { id: "retaining_wall", name: "Retaining Wall", unit: "cft" },
+      { id: "retaining_wall", name: "Retaining Wall", unit: "sft" },
+      { id: "water_reservoir", name: "UG Water Reservoir", unit: "cft" },
+      { id: "septic_tank", name: "Septic Tank", unit: "cft" },
     ]
   },
   structure: {
