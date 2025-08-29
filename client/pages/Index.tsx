@@ -79,8 +79,10 @@ const CONSTRUCTION_ITEMS = {
       { id: "column", name: "Column", unit: "cft" },
       { id: "beam", name: "Beam", unit: "cft" },
       { id: "slab", name: "Slab", unit: "cft" },
-      { id: "stair", name: "Staircase", unit: "cft" },
+      { id: "stair", name: "Stair", unit: "cft" },
       { id: "lintel", name: "Lintel", unit: "cft" },
+      { id: "lift_core", name: "Lift Core", unit: "cft" },
+      { id: "overhead_tank", name: "Overhead Tank", unit: "cft" },
     ]
   },
   masonry: {
