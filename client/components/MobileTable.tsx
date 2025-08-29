@@ -43,6 +43,7 @@ interface MobileTableProps {
   onDuplicate: (item: any) => void;
   onDelete: (itemId: string) => void;
   formatBDT: (amount: number) => string;
+  onAdd?: () => void;
 }
 
 export function MobileTable({
@@ -51,6 +52,7 @@ export function MobileTable({
   onDuplicate,
   onDelete,
   formatBDT,
+  onAdd,
 }: MobileTableProps) {
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
   const isMobile = useIsMobile();
@@ -346,7 +348,7 @@ export function MobileTable({
               <p className="text-sm text-gray-500 mb-4">
                 Start by adding construction items to your project
               </p>
-              <Button size="sm" className="bg-brand-500 hover:bg-brand-600">
+              <Button size="sm" className="bg-brand-500 hover:bg-brand-600" onClick={onAdd}>
                 Add First Item
               </Button>
             </div>
