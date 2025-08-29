@@ -263,14 +263,27 @@ export default function Index() {
 
   // Calculate materials and cost for an item using centralized logic
   const calculateItem = useCallback((data: any) => {
-    const dims = {
+    let dims = {
       length: parseFloat(data.length) || 0,
       width: parseFloat(data.width) || 0,
       height: parseFloat(data.height) || 0,
       thickness: parseFloat(data.thickness) || 0,
       quantity: parseFloat(data.quantity) || 1,
       multiple: data.isMultiple ? parseFloat(data.multipleQuantity) || 1 : 1,
-    };
+    } as any;
+
+    const def = findItemDef(data.type);
+    const inchesForPlan = new Set(["column", "beam", "lintel", "pile"]);
+    if (def && inchesForPlan.has(def.id)) {
+      // Convert inch inputs to feet for plan dimensions
+      if (!isNaN(dims.length)) dims.length = dims.length / 12;
+      if (!isNaN(dims.width)) dims.width = dims.width / 12;
+      // Pile uses width as diameter in inches and height as length in feet
+      if (def.id === "pile") {
+        // height remains feet
+      }
+    }
+
     const result = computeItem(data.type, dims, customRates as any);
     return {
       volume: result.materials.volume,
