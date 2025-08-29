@@ -65,9 +65,9 @@ export function MobileLayout({
   }
 
   return (
-    <div className="min-h-screen gpt5-gradient">
+    <div className="min-h-dvh gpt5-gradient">
       {/* Mobile Header */}
-      <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur-sm shadow-sm">
+      <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur-sm shadow-sm pt-[env(safe-area-inset-top)]">
         <div className="flex items-center justify-between px-4 py-3">
           <div className="flex items-center space-x-3">
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
@@ -76,7 +76,7 @@ export function MobileLayout({
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-80 p-0">
+              <SheetContent side="left" className="w-80 sm:w-80 w-[85vw] p-0">
                 <div className="flex flex-col h-full">
                   {/* Menu Header */}
                   <div className="p-6 border-b bg-gradient-to-r from-brand-500 to-brand-600">
@@ -277,7 +277,7 @@ export function MobileLayout({
       </header>
 
       {/* Content */}
-      <main className="pb-28">{children}</main>
+      <main className="px-4 pb-28 pt-2">{children}</main>
 
       {/* Mobile Bottom Navigation */}
       <div className="fixed bottom-0 left-0 right-0 z-40 border-t bg-white/95 backdrop-blur-sm pb-[env(safe-area-inset-bottom)]">
