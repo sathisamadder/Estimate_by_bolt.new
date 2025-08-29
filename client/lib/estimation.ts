@@ -130,7 +130,24 @@ export function findItemDef(id: string | undefined): ItemDef | undefined {
 
 export function getUnitLabel(itemId: string | undefined, field: "length" | "width" | "height" | "thickness"): string {
   const def = findItemDef(itemId);
-  if (!def) return field === "thickness" ? "ft" : "ft";
+  if (!def) return "ft";
+
+  // Structural members: width/length often specified in inches in drawings
+  const inchesForPlan = new Set(["column", "beam", "lintel"]);
+
+  if (def.id === "pile") {
+    if (field === "width") return "in"; // diameter
+    if (field === "height") return "ft"; // length/depth
+    if (field === "length") return "ft"; // not used but keep
+    return field === "thickness" ? "-" : "ft";
+  }
+
+  if (inchesForPlan.has(def.id)) {
+    if (field === "length" || field === "width") return "in";
+    if (field === "height") return "ft";
+    return "-";
+  }
+
   if (def.mode === "area") {
     if (field === "height") return "-";
     if (field === "thickness") return def.defaultThickness ? "ft" : "-";
