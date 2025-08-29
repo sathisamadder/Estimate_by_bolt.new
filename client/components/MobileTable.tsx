@@ -348,7 +348,11 @@ export function MobileTable({
               <p className="text-sm text-gray-500 mb-4">
                 Start by adding construction items to your project
               </p>
-              <Button size="sm" className="bg-brand-500 hover:bg-brand-600" onClick={onAdd}>
+              <Button
+                size="sm"
+                className="bg-brand-500 hover:bg-brand-600"
+                onClick={onAdd}
+              >
                 Add First Item
               </Button>
             </div>
