@@ -793,6 +793,12 @@ export default function Index() {
                 </CardContent>
               </Card>
 
+              {/* Quick pick grid */}
+              <MobileItemGrid
+                items={Object.entries(CONSTRUCTION_ITEMS).flatMap(([_, cat]) => cat.items.map((it)=>({ id: it.id, name: it.name, icon: cat.icon, color: (cat as any).color })))}
+                onPick={(id)=>{ setFormData((p)=>({...p,type:id})); setIsAddDialogOpen(true); }}
+              />
+
               {/* Items List */}
               <MobileTable
                 items={mobileTableItems}
