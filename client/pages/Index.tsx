@@ -1146,6 +1146,7 @@ export default function Index() {
                         type="number"
                         step="0.1"
                         placeholder="0.33"
+                        disabled={getUnitLabel(formData.type,'thickness')==='-'}
                         value={formData.thickness}
                         onChange={(e) => setFormData(prev => ({ ...prev, thickness: e.target.value }))}
                       />
