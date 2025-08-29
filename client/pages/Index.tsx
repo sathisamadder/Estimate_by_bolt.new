@@ -32,6 +32,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAuth } from "@/contexts/AuthContext";
 import { MobileLayout } from "@/components/MobileLayout";
+import { MobileItemGrid } from "@/components/MobileItemGrid";
 import { MobileTable } from "@/components/MobileTable";
 import {
   Building2,
