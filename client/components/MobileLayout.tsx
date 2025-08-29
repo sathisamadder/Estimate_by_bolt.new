@@ -249,7 +249,7 @@ export function MobileLayout({
         </div>
 
         {/* Mobile Tab Navigation */}
-        <div className="border-t bg-white">
+        <div className="hidden">
           <div className="overflow-x-auto">
             <div className="flex space-x-1 p-2 min-w-max">
               {navigationItems.map((item) => {
@@ -277,43 +277,47 @@ export function MobileLayout({
       </header>
 
       {/* Content */}
-      <main className="px-4 pb-28 pt-2">{children}</main>
+      <main className="px-4 pb-40 pt-2">{children}</main>
 
-      {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 border-t bg-white/95 backdrop-blur-sm pb-[env(safe-area-inset-bottom)]">
-        <div className="grid grid-cols-4 gap-1 p-2">
-          {navigationItems.map((item) => {
-            const IconComponent = item.icon;
-            return (
-              <Button
-                key={item.id}
-                variant="ghost"
-                size="sm"
-                className={`flex flex-col h-14 space-y-1 ${
-                  activeTab === item.id
-                    ? "text-brand-600 bg-brand-50"
-                    : "text-gray-600"
-                }`}
-                onClick={() => onTabChange(item.id)}
-              >
-                <IconComponent className="h-5 w-5" />
-                <span className="text-xs font-medium leading-none">
-                  {item.label.split(" ")[0]}
-                </span>
-              </Button>
-            );
-          })}
+      {/* Mobile Bottom Navigation - iPhone style */}
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 pb-[env(safe-area-inset-bottom)]">
+        <div className="mx-auto max-w-md px-4 pb-2">
+          <div className="relative">
+            <div className="pointer-events-auto grid grid-cols-5 items-center rounded-2xl bg-white/85 backdrop-blur-xl shadow-[0_12px_40px_-12px_rgba(0,0,0,0.35)] ring-1 ring-white/60">
+              {navigationItems.map((item) => {
+                const IconComponent = item.icon;
+                const isActive = activeTab === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    className={`flex flex-col items-center justify-center py-2.5 gap-1 ${
+                      isActive ? "text-brand-600" : "text-gray-600"
+                    }`}
+                    onClick={() => onTabChange(item.id)}
+                  >
+                    <span className={`inline-flex items-center justify-center rounded-xl ${
+                      isActive ? "bg-brand-100" : "bg-transparent"
+                    } p-2`}>
+                      <IconComponent className="h-5 w-5" />
+                    </span>
+                    <span className="text-[10px] leading-none">
+                      {item.label.split(" ")[0]}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            <Button
+              size="lg"
+              className="pointer-events-auto absolute -top-6 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full bg-brand-500 hover:bg-brand-600 shadow-2xl"
+              onClick={onAddItem}
+            >
+              <Plus className="h-6 w-6" />
+            </Button>
+          </div>
         </div>
       </div>
 
-      {/* Floating Action Button */}
-      <Button
-        size="lg"
-        className="fixed bottom-24 right-4 z-30 w-14 h-14 rounded-full bg-brand-500 hover:bg-brand-600 shadow-lg"
-        onClick={onAddItem}
-      >
-        <Plus className="h-6 w-6" />
-      </Button>
     </div>
   );
 }
