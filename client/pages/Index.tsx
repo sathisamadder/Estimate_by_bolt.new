@@ -788,6 +788,298 @@ export default function Index() {
             </Card>
           )}
         </div>
+
+        <Sheet open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+          <SheetContent side="bottom" className="h-[90vh]">
+            <SheetHeader>
+              <SheetTitle>
+                {editingItem ? "Edit Item" : "Add New Item"}
+              </SheetTitle>
+            </SheetHeader>
+            <ScrollArea className="h-full pr-4">
+              <div className="space-y-4 py-4">
+                <div className="grid grid-cols-1 gap-4">
+                  <div>
+                    <Label htmlFor="type">Item Type *</Label>
+                    <Select value={formData.type} onValueChange={(value) => setFormData(prev => ({ ...prev, type: value }))}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select item type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Object.entries(CONSTRUCTION_ITEMS).map(([key, category]) => (
+                          <div key={key}>
+                            <div className="px-2 py-1 text-sm font-medium text-gray-500">
+                              {category.label}
+                            </div>
+                            {category.items.map(item => (
+                              <SelectItem key={item.id} value={item.id}>
+                                {item.name}
+                              </SelectItem>
+                            ))}
+                          </div>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="description">Description</Label>
+                    <Textarea
+                      id="description"
+                      placeholder="Enter item description"
+                      value={formData.description}
+                      onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="length">Length ({getUnitLabel(formData.type,'length')}) *</Label>
+                      <Input
+                        id="length"
+                        type="number"
+                        step="0.1"
+                        placeholder="0.0"
+                        value={formData.length}
+                        onChange={(e) => setFormData(prev => ({ ...prev, length: e.target.value }))}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="width">Width ({getUnitLabel(formData.type,'width')}) *</Label>
+                      <Input
+                        id="width"
+                        type="number"
+                        step="0.1"
+                        placeholder="0.0"
+                        disabled={getUnitLabel(formData.type,'width')==='-'}
+                        value={formData.width}
+                        onChange={(e) => setFormData(prev => ({ ...prev, width: e.target.value }))}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="height">Height ({getUnitLabel(formData.type,'height')}) *</Label>
+                      <Input
+                        id="height"
+                        type="number"
+                        step="0.1"
+                        placeholder="0.0"
+                        disabled={getUnitLabel(formData.type,'height')==='-'}
+                        value={formData.height}
+                        onChange={(e) => setFormData(prev => ({ ...prev, height: e.target.value }))}
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="thickness">Thickness ({getUnitLabel(formData.type,'thickness')})</Label>
+                      <Input
+                        id="thickness"
+                        type="number"
+                        step="0.1"
+                        placeholder="0.33"
+                        disabled={getUnitLabel(formData.type,'thickness')==='-'}
+                        value={formData.thickness}
+                        onChange={(e) => setFormData(prev => ({ ...prev, thickness: e.target.value }))}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Switch
+                      id="multiple"
+                      checked={formData.isMultiple}
+                      onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isMultiple: checked }))}
+                    />
+                    <Label htmlFor="multiple">Multiple Units</Label>
+                  </div>
+
+                  {formData.isMultiple && (
+                    <div>
+                      <Label htmlFor="multipleQuantity">Quantity</Label>
+                      <Input
+                        id="multipleQuantity"
+                        type="number"
+                        min="1"
+                        placeholder="1"
+                        value={formData.multipleQuantity}
+                        onChange={(e) => setFormData(prev => ({ ...prev, multipleQuantity: e.target.value }))}
+                      />
+                    </div>
+                  )}
+
+                  <Separator />
+
+                  <div className="space-y-4">
+                    <h4 className="font-medium">Reinforcement Details</h4>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div>
+                        <Label htmlFor="mainBars">Main Bars (mm)</Label>
+                        <Select value={formData.mainBars} onValueChange={(value) => setFormData(prev => ({ ...prev, mainBars: value }))}>
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="10">10mm</SelectItem>
+                            <SelectItem value="12">12mm</SelectItem>
+                            <SelectItem value="16">16mm</SelectItem>
+                            <SelectItem value="20">20mm</SelectItem>
+                            <SelectItem value="25">25mm</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Label htmlFor="stirrups">Stirrups (mm)</Label>
+                        <Select value={formData.stirrups} onValueChange={(value) => setFormData(prev => ({ ...prev, stirrups: value }))}>
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="6">6mm</SelectItem>
+                            <SelectItem value="8">8mm</SelectItem>
+                            <SelectItem value="10">10mm</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Label htmlFor="spacing">Spacing (inch)</Label>
+                        <Input
+                          id="spacing"
+                          type="number"
+                          placeholder="6"
+                          value={formData.spacing}
+                          onChange={(e) => setFormData(prev => ({ ...prev, spacing: e.target.value }))}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex space-x-2 pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setIsAddDialogOpen(false);
+                      setEditingItem(null);
+                      resetForm();
+                    }}
+                    className="flex-1"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={editingItem ? handleUpdateItem : handleAddItem}
+                    className="flex-1 bg-brand-500 hover:bg-brand-600"
+                  >
+                    {editingItem ? "Update Item" : "Add Item"}
+                  </Button>
+                </div>
+              </div>
+            </ScrollArea>
+          </SheetContent>
+        </Sheet>
+
+        <Dialog open={isPricingOpen} onOpenChange={setIsPricingOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Material Pricing Settings</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div>
+                  <Label htmlFor="cement">Cement (BDT/bag)</Label>
+                  <Input id="cement" type="number" value={customRates.cement}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, cement: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label htmlFor="sand">Sand (BDT/cft)</Label>
+                  <Input id="sand" type="number" value={customRates.sand}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, sand: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label htmlFor="aggregate">Aggregate (BDT/cft)</Label>
+                  <Input id="aggregate" type="number" value={customRates.aggregate}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, aggregate: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label htmlFor="brick">Brick (BDT/piece)</Label>
+                  <Input id="brick" type="number" value={customRates.brick}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, brick: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label htmlFor="steel">Steel (BDT/kg)</Label>
+                  <Input id="steel" type="number" value={customRates.steel}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, steel: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label htmlFor="labor">Labor (BDT/day)</Label>
+                  <Input id="labor" type="number" value={customRates.labor}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, labor: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label htmlFor="wastage">Wastage (%)</Label>
+                  <Input id="wastage" type="number" value={customRates.wastagePercent}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, wastagePercent: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label htmlFor="overhead">Overhead (%)</Label>
+                  <Input id="overhead" type="number" value={customRates.overheadPercent}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, overheadPercent: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label htmlFor="profit">Profit (%)</Label>
+                  <Input id="profit" type="number" value={customRates.profitPercent}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, profitPercent: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label htmlFor="tax">Tax/VAT (%)</Label>
+                  <Input id="tax" type="number" value={customRates.taxPercent}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, taxPercent: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label htmlFor="dry">Dry Volume Factor</Label>
+                  <Input id="dry" type="number" step="0.01" value={customRates.dryFactor}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, dryFactor: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label htmlFor="bag">Cement Bag Volume (cft)</Label>
+                  <Input id="bag" type="number" step="0.01" value={customRates.cementBagVolumeCft}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, cementBagVolumeCft: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label>Concrete Mix (c:s:a)</Label>
+                  <div className="grid grid-cols-3 gap-2">
+                    <Input type="number" placeholder="1" value={customRates.concreteMix.c}
+                      onChange={(e) => setCustomRates((p:any) => ({ ...p, concreteMix: { ...p.concreteMix, c: parseFloat(e.target.value) || 0 } }))} />
+                    <Input type="number" placeholder="1.5" value={customRates.concreteMix.s}
+                      onChange={(e) => setCustomRates((p:any) => ({ ...p, concreteMix: { ...p.concreteMix, s: parseFloat(e.target.value) || 0 } }))} />
+                    <Input type="number" placeholder="3" value={customRates.concreteMix.a}
+                      onChange={(e) => setCustomRates((p:any) => ({ ...p, concreteMix: { ...p.concreteMix, a: parseFloat(e.target.value) || 0 } }))} />
+                  </div>
+                </div>
+                <div>
+                  <Label>Mortar Mix (c:s)</Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Input type="number" placeholder="1" value={customRates.mortarMix.c}
+                      onChange={(e) => setCustomRates((p:any) => ({ ...p, mortarMix: { ...p.mortarMix, c: parseFloat(e.target.value) || 0 } }))} />
+                    <Input type="number" placeholder="5" value={customRates.mortarMix.s}
+                      onChange={(e) => setCustomRates((p:any) => ({ ...p, mortarMix: { ...p.mortarMix, s: parseFloat(e.target.value) || 0 } }))} />
+                  </div>
+                </div>
+                <div>
+                  <Label htmlFor="bpc">Bricks per cft</Label>
+                  <Input id="bpc" type="number" step="0.01" value={customRates.brickPerCft}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, brickPerCft: parseFloat(e.target.value) || 0 }))} />
+                </div>
+                <div>
+                  <Label htmlFor="sf">Steel Factor</Label>
+                  <Input id="sf" type="number" step="0.01" value={customRates.steelFactor}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, steelFactor: parseFloat(e.target.value) || 0 }))} />
+                </div>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </MobileLayout>
     );
   }
