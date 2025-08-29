@@ -76,7 +76,7 @@ export function MobileLayout({
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-80 sm:w-80 w-[85vw] p-0">
+              <SheetContent side="left" className="w-80 sm:w-80 w-[85vw] p-0 bg-white/80 backdrop-blur-xl border border-white/40 shadow-2xl">
                 <div className="flex flex-col h-full">
                   {/* Menu Header */}
                   <div className="p-6 border-b bg-gradient-to-r from-brand-500 to-brand-600">
@@ -281,21 +281,21 @@ export function MobileLayout({
 
       {/* Mobile Bottom Navigation - iPhone style */}
       <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 pb-[env(safe-area-inset-bottom)]">
-        <div className="mx-auto max-w-md px-4 pb-2">
+        <div className="mx-auto max-w-xl px-3 pb-3">
           <div className="relative">
-            <div className="pointer-events-auto grid grid-cols-5 items-center rounded-2xl bg-white/85 backdrop-blur-xl shadow-[0_12px_40px_-12px_rgba(0,0,0,0.35)] ring-1 ring-white/60">
+            <div className="pointer-events-auto grid grid-cols-5 items-center rounded-3xl bg-white/75 backdrop-blur-2xl shadow-[0_18px_50px_-12px_rgba(0,0,0,0.35)] ring-1 ring-white/60 border border-white/40">
               {navigationItems.map((item) => {
                 const IconComponent = item.icon;
                 const isActive = activeTab === item.id;
                 return (
                   <button
                     key={item.id}
-                    className={`flex flex-col items-center justify-center py-2.5 gap-1 ${
+                    className={`flex flex-col items-center justify-center py-3 gap-1.5 ${
                       isActive ? "text-brand-600" : "text-gray-600"
                     }`}
                     onClick={() => onTabChange(item.id)}
                   >
-                    <span className={`inline-flex items-center justify-center rounded-xl ${
+                    <span className={`inline-flex items-center justify-center rounded-2xl ${
                       isActive ? "bg-brand-100" : "bg-transparent"
                     } p-2`}>
                       <IconComponent className="h-5 w-5" />
@@ -309,7 +309,7 @@ export function MobileLayout({
             </div>
             <Button
               size="lg"
-              className="pointer-events-auto absolute -top-6 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full bg-brand-500 hover:bg-brand-600 shadow-2xl"
+              className="pointer-events-auto absolute -top-8 left-1/2 -translate-x-1/2 w-16 h-16 rounded-full bg-brand-500 hover:bg-brand-600 shadow-[0_18px_50px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/60"
               onClick={onAddItem}
             >
               <Plus className="h-6 w-6" />
