@@ -48,7 +48,7 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen gpt5-gradient flex items-center justify-center p-4">
+    <div className="min-h-dvh gpt5-gradient flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
