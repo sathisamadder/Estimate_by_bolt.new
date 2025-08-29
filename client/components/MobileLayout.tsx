@@ -245,19 +245,7 @@ export function MobileLayout({
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm" className="p-2">
-              <Search className="h-5 w-5" />
-            </Button>
-            <Button
-              size="sm"
-              className="bg-brand-500 hover:bg-brand-600 px-3"
-              onClick={onAddItem}
-            >
-              <Plus className="h-4 w-4 mr-1" />
-              Add
-            </Button>
-          </div>
+          <div className="flex items-center space-x-2"></div>
         </div>
 
         {/* Mobile Tab Navigation */}
