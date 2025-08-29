@@ -1447,60 +1447,96 @@ export default function Index() {
             <DialogTitle>Material Pricing Settings</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <div>
                 <Label htmlFor="cement">Cement (BDT/bag)</Label>
-                <Input
-                  id="cement"
-                  type="number"
-                  value={customRates.cement}
-                  onChange={(e) => setCustomRates(prev => ({ ...prev, cement: parseFloat(e.target.value) || 0 }))}
-                />
+                <Input id="cement" type="number" value={customRates.cement}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, cement: parseFloat(e.target.value) || 0 }))} />
               </div>
               <div>
                 <Label htmlFor="sand">Sand (BDT/cft)</Label>
-                <Input
-                  id="sand"
-                  type="number"
-                  value={customRates.sand}
-                  onChange={(e) => setCustomRates(prev => ({ ...prev, sand: parseFloat(e.target.value) || 0 }))}
-                />
+                <Input id="sand" type="number" value={customRates.sand}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, sand: parseFloat(e.target.value) || 0 }))} />
               </div>
               <div>
                 <Label htmlFor="aggregate">Aggregate (BDT/cft)</Label>
-                <Input
-                  id="aggregate"
-                  type="number"
-                  value={customRates.aggregate}
-                  onChange={(e) => setCustomRates(prev => ({ ...prev, aggregate: parseFloat(e.target.value) || 0 }))}
-                />
+                <Input id="aggregate" type="number" value={customRates.aggregate}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, aggregate: parseFloat(e.target.value) || 0 }))} />
               </div>
               <div>
                 <Label htmlFor="brick">Brick (BDT/piece)</Label>
-                <Input
-                  id="brick"
-                  type="number"
-                  value={customRates.brick}
-                  onChange={(e) => setCustomRates(prev => ({ ...prev, brick: parseFloat(e.target.value) || 0 }))}
-                />
+                <Input id="brick" type="number" value={customRates.brick}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, brick: parseFloat(e.target.value) || 0 }))} />
               </div>
               <div>
                 <Label htmlFor="steel">Steel (BDT/kg)</Label>
-                <Input
-                  id="steel"
-                  type="number"
-                  value={customRates.steel}
-                  onChange={(e) => setCustomRates(prev => ({ ...prev, steel: parseFloat(e.target.value) || 0 }))}
-                />
+                <Input id="steel" type="number" value={customRates.steel}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, steel: parseFloat(e.target.value) || 0 }))} />
               </div>
               <div>
                 <Label htmlFor="labor">Labor (BDT/day)</Label>
-                <Input
-                  id="labor"
-                  type="number"
-                  value={customRates.labor}
-                  onChange={(e) => setCustomRates(prev => ({ ...prev, labor: parseFloat(e.target.value) || 0 }))}
-                />
+                <Input id="labor" type="number" value={customRates.labor}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, labor: parseFloat(e.target.value) || 0 }))} />
+              </div>
+              <div>
+                <Label htmlFor="wastage">Wastage (%)</Label>
+                <Input id="wastage" type="number" value={customRates.wastagePercent}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, wastagePercent: parseFloat(e.target.value) || 0 }))} />
+              </div>
+              <div>
+                <Label htmlFor="overhead">Overhead (%)</Label>
+                <Input id="overhead" type="number" value={customRates.overheadPercent}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, overheadPercent: parseFloat(e.target.value) || 0 }))} />
+              </div>
+              <div>
+                <Label htmlFor="profit">Profit (%)</Label>
+                <Input id="profit" type="number" value={customRates.profitPercent}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, profitPercent: parseFloat(e.target.value) || 0 }))} />
+              </div>
+              <div>
+                <Label htmlFor="tax">Tax/VAT (%)</Label>
+                <Input id="tax" type="number" value={customRates.taxPercent}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, taxPercent: parseFloat(e.target.value) || 0 }))} />
+              </div>
+              <div>
+                <Label htmlFor="dryFactor">Dry factor</Label>
+                <Input id="dryFactor" type="number" step="0.01" value={customRates.dryFactor}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, dryFactor: parseFloat(e.target.value) || 0 }))} />
+              </div>
+              <div>
+                <Label htmlFor="bagVol">Bag volume (cft/bag)</Label>
+                <Input id="bagVol" type="number" step="0.01" value={customRates.cementBagVolumeCft}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, cementBagVolumeCft: parseFloat(e.target.value) || 0 }))} />
+              </div>
+              <div>
+                <Label>Concrete Mix (c:s:a)</Label>
+                <div className="grid grid-cols-3 gap-2">
+                  <Input type="number" step="0.1" value={customRates.concreteMix?.c}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, concreteMix: { ...(p.concreteMix||{}), c: parseFloat(e.target.value)||0 } }))} />
+                  <Input type="number" step="0.1" value={customRates.concreteMix?.s}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, concreteMix: { ...(p.concreteMix||{}), s: parseFloat(e.target.value)||0 } }))} />
+                  <Input type="number" step="0.1" value={customRates.concreteMix?.a}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, concreteMix: { ...(p.concreteMix||{}), a: parseFloat(e.target.value)||0 } }))} />
+                </div>
+              </div>
+              <div>
+                <Label>Mortar Mix (c:s)</Label>
+                <div className="grid grid-cols-2 gap-2">
+                  <Input type="number" step="0.1" value={customRates.mortarMix?.c}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, mortarMix: { ...(p.mortarMix||{}), c: parseFloat(e.target.value)||0 } }))} />
+                  <Input type="number" step="0.1" value={customRates.mortarMix?.s}
+                    onChange={(e) => setCustomRates((p:any) => ({ ...p, mortarMix: { ...(p.mortarMix||{}), s: parseFloat(e.target.value)||0 } }))} />
+                </div>
+              </div>
+              <div>
+                <Label htmlFor="brickPerCft">Bricks per cft (wall)</Label>
+                <Input id="brickPerCft" type="number" step="0.01" value={customRates.brickPerCft}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, brickPerCft: parseFloat(e.target.value) || 0 }))} />
+              </div>
+              <div>
+                <Label htmlFor="steelFactor">Steel factor</Label>
+                <Input id="steelFactor" type="number" step="0.1" value={customRates.steelFactor}
+                  onChange={(e) => setCustomRates((p:any) => ({ ...p, steelFactor: parseFloat(e.target.value) || 0 }))} />
               </div>
             </div>
             <div className="flex justify-end space-x-2">
