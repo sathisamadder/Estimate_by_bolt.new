@@ -661,6 +661,7 @@ export default function Index() {
                 onDuplicate={handleDuplicateItem}
                 onDelete={handleDeleteItem}
                 formatBDT={formatBDT}
+                onAdd={() => setIsAddDialogOpen(true)}
               />
             </div>
           )}
