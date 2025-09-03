@@ -418,6 +418,10 @@ export function getUnitLabel(
     return field === "thickness" ? "-" : "ft";
   }
 
+  if (def.id === "footing" || def.id === "pile_cap") {
+    if (field === "thickness") return "in"; // depth captured in inches per reference
+  }
+
   if (inchesForPlan.has(def.id)) {
     if (field === "length" || field === "width") return "in";
     if (field === "height") return "ft";
@@ -499,7 +503,13 @@ export function computeItem(
     thickness: dim.thickness ?? 0,
     quantity: dim.quantity ?? 1,
     multiple: dim.multiple ?? 1,
-  };
+    mainBarCount: dim.mainBarCount ?? 0,
+    mainBarDiaMm: dim.mainBarDiaMm ?? 0,
+    stirrupDiaMm: dim.stirrupDiaMm ?? 0,
+    stirrupSpacingIn: dim.stirrupSpacingIn ?? 0,
+    clearCoverIn: dim.clearCoverIn ?? 0,
+    lapLengthIn: dim.lapLengthIn ?? 0,
+  } as Required<DimensionsInput>;
 
   let volume = 0;
   let area = 0;
@@ -573,9 +583,14 @@ export function computeItem(
           const t = def.defaultThickness ?? 0.0;
           volume = area * t;
         } else {
+          // Convert thickness for footing & pile cap from inches to feet if provided
+          const tInFt =
+            (def.id === "footing" || def.id === "pile_cap") && safe.thickness
+              ? safe.thickness / 12
+              : safe.thickness;
           const depth = def.defaultThickness
-            ? safe.thickness || def.defaultThickness
-            : safe.thickness || safe.height;
+            ? tInFt || def.defaultThickness
+            : tInFt || safe.height;
           if (depth) {
             volume = safe.length * (safe.width || 1) * depth;
           } else {
@@ -610,7 +625,34 @@ export function computeItem(
       cement = cementVol / (rates.cementBagVolumeCft || 1.25);
       sand = (dry * (rates.concreteMix?.s || 1.5)) / sum;
       aggregate = (dry * (rates.concreteMix?.a || 3)) / sum;
-      steel = volume * (def.steel || 0) * (rates.steelFactor || 1);
+      // Reinforcement: detailed calc for piles
+      if (def.id === "pile" && safe.width && (safe.height || safe.length)) {
+        const unitByMm: Record<number, number> = {
+          10: 0.19,
+          12: 0.27,
+          16: 0.48,
+          20: 0.75,
+          25: 1.17,
+        };
+        const L = safe.height || safe.length; // ft
+        const nMain = safe.mainBarCount || 7;
+        const mainDia = safe.mainBarDiaMm || 20;
+        const mainWpf = unitByMm[mainDia] || 0.75;
+        const lapFt = (safe.lapLengthIn || 30) / 12;
+        const mainSteel = nMain * (L + lapFt) * mainWpf;
+
+        const coverFt = (safe.clearCoverIn || 3) / 12;
+        const dClearFt = Math.max((safe.width || 0) - 2 * coverFt, 0);
+        const circumferenceFt = Math.PI * dClearFt;
+        const spacingFt = (safe.stirrupSpacingIn || 6) / 12;
+        const nSpirals = spacingFt > 0 ? Math.ceil(L / spacingFt) : 0;
+        const stirDia = safe.stirrupDiaMm || 10;
+        const stirWpf = unitByMm[stirDia] || 0.19;
+        const spiralSteel = nSpirals * circumferenceFt * stirWpf;
+        steel = (mainSteel + spiralSteel) * (rates.steelFactor || 1);
+      } else {
+        steel = volume * (def.steel || 0) * (rates.steelFactor || 1);
+      }
     } else if (def.mode === "wall") {
       const wallBricks = (rates.brickPerCft || def.brickPerCft || 0) * volume;
       const dry = volume * (rates.dryFactor || 1.54);
