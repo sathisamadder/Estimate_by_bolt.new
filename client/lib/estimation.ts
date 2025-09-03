@@ -631,7 +631,8 @@ export function computeItem(
   if (def) {
     if (def.mode === "volume" || def.id === "retaining_wall") {
       const dry = volume * (rates.dryFactor || 1.5);
-      const mix = def.concreteMixOverride || rates.concreteMix || { c: 1, s: 1.5, a: 3 };
+      const mix = def.concreteMixOverride ||
+        rates.concreteMix || { c: 1, s: 1.5, a: 3 };
       const sum = (mix.c || 1) + (mix.s || 1.5) + (mix.a || 3);
       const cementVol = (dry * (mix.c || 1)) / sum;
       cement = cementVol / (rates.cementBagVolumeCft || 1.25);

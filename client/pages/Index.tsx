@@ -340,7 +340,7 @@ export default function Index() {
 
       toast({ title: "Project Saved", description: "Saved to Firebase." });
     } catch (e) {
-      toast({ title: "Saved Locally", description: "Sync failed.", });
+      toast({ title: "Saved Locally", description: "Sync failed." });
       console.error(e);
     }
   }, [items, customRates, projectName, clientInfo, firebaseProjectId, toast]);
@@ -1022,7 +1022,10 @@ export default function Index() {
                       Generate comprehensive project reports with material
                       breakdowns and cost analysis.
                     </p>
-                    <Button className="bg-brand-500 hover:bg-brand-600" onClick={handlePrint}>
+                    <Button
+                      className="bg-brand-500 hover:bg-brand-600"
+                      onClick={handlePrint}
+                    >
                       Generate Report
                     </Button>
                   </div>
@@ -1050,9 +1053,12 @@ export default function Index() {
                       View detailed charts and analytics for better project
                       insights.
                     </p>
-                    <Button className="bg-brand-500 hover:bg-brand-600" onClick={handlePrint}>
-                    View Analytics
-                  </Button>
+                    <Button
+                      className="bg-brand-500 hover:bg-brand-600"
+                      onClick={handlePrint}
+                    >
+                      View Analytics
+                    </Button>
                   </div>
                 </div>
               </CardContent>
@@ -1985,7 +1991,10 @@ export default function Index() {
                     View detailed charts and analytics for better project
                     insights.
                   </p>
-                  <Button className="bg-brand-500 hover:bg-brand-600" onClick={handlePrint}>
+                  <Button
+                    className="bg-brand-500 hover:bg-brand-600"
+                    onClick={handlePrint}
+                  >
                     View Analytics
                   </Button>
                 </div>
@@ -2005,8 +2014,12 @@ export default function Index() {
               alt="Authorized Signature"
               className="h-14 object-contain inline-block"
             />
-            <div className="mt-2 text-sm text-gray-700">Authorized Signature</div>
-            <div className="text-xs text-gray-500">Date: {new Date().toLocaleDateString()}</div>
+            <div className="mt-2 text-sm text-gray-700">
+              Authorized Signature
+            </div>
+            <div className="text-xs text-gray-500">
+              Date: {new Date().toLocaleDateString()}
+            </div>
           </div>
         </div>
       </div>
