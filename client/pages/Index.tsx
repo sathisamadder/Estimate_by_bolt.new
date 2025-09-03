@@ -168,8 +168,11 @@ interface EstimateItem {
   };
   reinforcement: {
     mainBars: number;
+    mainBarCount?: number;
     stirrups: number;
     spacing: number;
+    clearCover?: number;
+    lapLength?: number;
   };
   materials: {
     cement: number;
