@@ -48,7 +48,7 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-dvh gpt5-gradient flex items-center justify-center p-4">
+    <div className="min-h-dvh bg-white flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
@@ -68,8 +68,8 @@ export function Login() {
                 className="flex items-center justify-center w-20 h-20 rounded-xl bg-white shadow-sm"
               >
                 <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2F46361fbad51e408b89450daa00371588"
-                  alt="ROY Logo"
+                  src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2Fc1fba5ea5cf94244b8c69f5e5c441958?format=webp&width=800"
+                  alt="ROY Construction Logo"
                   className="w-16 h-16 object-contain bg-transparent"
                   style={{ background: "transparent", backdropFilter: "none" }}
                   onError={(e) => {
