@@ -455,8 +455,11 @@ export default function Index() {
       thickness: item.dimensions.thickness?.toString() || "",
       quantity: item.dimensions.quantity?.toString() || "1",
       mainBars: item.reinforcement.mainBars.toString(),
+      mainBarCount: ((item as any).reinforcement?.mainBarCount ?? 7).toString(),
       stirrups: item.reinforcement.stirrups.toString(),
       spacing: item.reinforcement.spacing.toString(),
+      clearCover: ((item as any).reinforcement?.clearCover ?? 3).toString(),
+      lapLength: ((item as any).reinforcement?.lapLength ?? 30).toString(),
       isMultiple: item.isMultiple,
       multipleQuantity: item.multipleQuantity.toString(),
     });
