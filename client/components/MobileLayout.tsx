@@ -65,7 +65,7 @@ export function MobileLayout({
   }
 
   return (
-    <div className="min-h-dvh gpt5-gradient">
+    <div className="min-h-dvh bg-white">
       {/* Mobile Header */}
       <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur-sm shadow-sm pt-[env(safe-area-inset-top)]">
         <div className="flex items-center justify-between px-4 py-3">
