@@ -230,8 +230,11 @@ export default function Index() {
     thickness: "",
     quantity: "1",
     mainBars: "12",
-    stirrups: "8",
+    mainBarCount: "7",
+    stirrups: "10",
     spacing: "6",
+    clearCover: "3",
+    lapLength: "30",
     isMultiple: false,
     multipleQuantity: "1",
   });
