@@ -86,8 +86,8 @@ export function MobileLayout({
                     <div className="flex items-center space-x-3">
                       <div className="flex items-center justify-center w-10 h-10 bg-white rounded-lg ring-1 ring-black/5">
                         <img
-                          src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2F46361fbad51e408b89450daa00371588"
-                          alt="ROY Logo"
+                          src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2Fc1fba5ea5cf94244b8c69f5e5c441958?format=webp&width=800"
+                          alt="ROY Construction Logo"
                           className="w-7 h-7 object-contain bg-transparent"
                           style={{
                             background: "transparent",
