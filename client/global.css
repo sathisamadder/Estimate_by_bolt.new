@@ -105,18 +105,18 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* Dark mode construction colors */
-    --brand-50: 13 88% 14%;
-    --brand-100: 15 75% 28%;
-    --brand-200: 15 79% 31%;
-    --brand-300: 17 85% 37%;
-    --brand-400: 20 85% 45%;
-    --brand-500: 24 85% 53%;
-    --brand-600: 27 96% 63%;
-    --brand-700: 30 100% 74%;
-    --brand-800: 31 100% 85%;
-    --brand-900: 31 100% 92%;
-    --brand-950: 31 100% 97%;
+    /* Dark mode ROY brand blue */
+    --brand-50: 210 50% 12%;
+    --brand-100: 210 60% 22%;
+    --brand-200: 210 65% 28%;
+    --brand-300: 210 70% 35%;
+    --brand-400: 210 75% 40%;
+    --brand-500: 210 80% 45%;
+    --brand-600: 210 85% 60%;
+    --brand-700: 210 93% 77%;
+    --brand-800: 210 100% 88%;
+    --brand-900: 210 100% 94%;
+    --brand-950: 210 100% 97%;
 
     --construction-orange: 24 85% 53%;
     --construction-orange-dark: 20 85% 45%;
