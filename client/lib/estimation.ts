@@ -14,6 +14,8 @@ export interface ItemDef {
   steel: number; // kg per cft
   defaultThickness?: number; // ft (for slabs, walls, finishes)
   brickPerCft?: number; // nos per cft for masonry
+  concreteMixOverride?: { c: number; s: number; a: number };
+  mortarMixOverride?: { c: number; s: number };
 }
 
 export interface Category {
@@ -52,7 +54,7 @@ export const DEFAULT_RATES: EstimationRates = {
   overheadPercent: 10,
   profitPercent: 7,
   taxPercent: 5,
-  dryFactor: 1.54,
+  dryFactor: 1.5,
   cementBagVolumeCft: 1.25,
   concreteMix: { c: 1, s: 1.5, a: 3 },
   mortarMix: { c: 1, s: 5 },
@@ -135,6 +137,18 @@ export const CATEGORIES: Record<string, Category> = {
         sand: 1.5,
         aggregate: 2.9,
         steel: 110,
+      },
+      {
+        id: "lean_concrete",
+        name: "Lean Concrete (PCC)",
+        unit: "cft",
+        mode: "volume",
+        cement: 0.2,
+        sand: 0.8,
+        aggregate: 1.6,
+        steel: 0,
+        defaultThickness: 0.33,
+        concreteMixOverride: { c: 1, s: 3, a: 6 },
       },
       {
         id: "raft",
@@ -273,7 +287,7 @@ export const CATEGORIES: Record<string, Category> = {
         sand: 0.0,
         aggregate: 0.0,
         steel: 0,
-        defaultThickness: 0.33,
+        defaultThickness: 0.417,
         brickPerCft: 500,
       },
       {
@@ -616,15 +630,13 @@ export function computeItem(
   let steel = 0;
   if (def) {
     if (def.mode === "volume" || def.id === "retaining_wall") {
-      const dry = volume * (rates.dryFactor || 1.54);
-      const sum =
-        (rates.concreteMix?.c || 1) +
-        (rates.concreteMix?.s || 1.5) +
-        (rates.concreteMix?.a || 3);
-      const cementVol = (dry * (rates.concreteMix?.c || 1)) / sum;
+      const dry = volume * (rates.dryFactor || 1.5);
+      const mix = def.concreteMixOverride || rates.concreteMix || { c: 1, s: 1.5, a: 3 };
+      const sum = (mix.c || 1) + (mix.s || 1.5) + (mix.a || 3);
+      const cementVol = (dry * (mix.c || 1)) / sum;
       cement = cementVol / (rates.cementBagVolumeCft || 1.25);
-      sand = (dry * (rates.concreteMix?.s || 1.5)) / sum;
-      aggregate = (dry * (rates.concreteMix?.a || 3)) / sum;
+      sand = (dry * (mix.s || 1.5)) / sum;
+      aggregate = (dry * (mix.a || 3)) / sum;
       // Reinforcement: detailed calc for piles
       if (def.id === "pile" && safe.width && (safe.height || safe.length)) {
         const unitByMm: Record<number, number> = {
@@ -655,11 +667,12 @@ export function computeItem(
       }
     } else if (def.mode === "wall") {
       const wallBricks = (rates.brickPerCft || def.brickPerCft || 0) * volume;
-      const dry = volume * (rates.dryFactor || 1.54);
-      const sum = (rates.mortarMix?.c || 1) + (rates.mortarMix?.s || 5);
-      const cementVol = (dry * (rates.mortarMix?.c || 1)) / sum;
+      const dry = volume * (rates.dryFactor || 1.5);
+      const mmix = def.mortarMixOverride || rates.mortarMix || { c: 1, s: 5 };
+      const sum = (mmix.c || 1) + (mmix.s || 5);
+      const cementVol = (dry * (mmix.c || 1)) / sum;
       cement = cementVol / (rates.cementBagVolumeCft || 1.25);
-      sand = (dry * (rates.mortarMix?.s || 5)) / sum;
+      sand = (dry * (mmix.s || 5)) / sum;
       aggregate = 0;
       bricks = wallBricks;
       steel = (def.steel || 0) * volume * (rates.steelFactor || 1);
@@ -671,11 +684,12 @@ export function computeItem(
         aggregate = 0;
         steel = 0;
       } else {
-        const dry = volume * (rates.dryFactor || 1.54);
-        const sum = (rates.mortarMix?.c || 1) + (rates.mortarMix?.s || 5);
-        const cementVol = (dry * (rates.mortarMix?.c || 1)) / sum;
+        const dry = volume * (rates.dryFactor || 1.5);
+        const mmix = def.mortarMixOverride || rates.mortarMix || { c: 1, s: 5 };
+        const sum = (mmix.c || 1) + (mmix.s || 5);
+        const cementVol = (dry * (mmix.c || 1)) / sum;
         cement = cementVol / (rates.cementBagVolumeCft || 1.25);
-        sand = (dry * (rates.mortarMix?.s || 5)) / sum;
+        sand = (dry * (mmix.s || 5)) / sum;
         aggregate = 0;
         steel = 0;
       }
