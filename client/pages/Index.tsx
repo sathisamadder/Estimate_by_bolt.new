@@ -1983,6 +1983,22 @@ export default function Index() {
         </Tabs>
       </div>
 
+      {/* Print-only signature footer */}
+      <div className="hidden print:block px-12 py-10">
+        <hr className="mb-6 border-gray-300" />
+        <div className="flex justify-end items-center space-x-6">
+          <div className="text-right">
+            <img
+              src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2F14bac5208f2c41e4ac31fe60536d8ede?format=webp&width=800"
+              alt="Authorized Signature"
+              className="h-14 object-contain inline-block"
+            />
+            <div className="mt-2 text-sm text-gray-700">Authorized Signature</div>
+            <div className="text-xs text-gray-500">Date: {new Date().toLocaleDateString()}</div>
+          </div>
+        </div>
+      </div>
+
       {/* Add/Edit Item Dialog/Sheet */}
       {isMobile ? (
         <Sheet open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
