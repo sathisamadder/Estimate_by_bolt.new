@@ -3,15 +3,17 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
-// Firebase configuration - your actual project config
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBYUY2Z2ZQrL0aFkFMmO3vxKHKjwmpt3Go",
-  authDomain: "tanemr-490d2.firebaseapp.com",
-  projectId: "tanemr-490d2",
-  storageBucket: "tanemr-490d2.firebasestorage.app",
-  messagingSenderId: "610909783295",
-  appId: "1:610909783295:web:536b9161cf9d0838acb8ca",
-  measurementId: "G-5KH3F9FEV2",
+  apiKey: "AIzaSyD4ZF5-QApD-JAzGZvwkVSKR3PyPEYgaBk",
+  authDomain: "estimator-5823.firebaseapp.com",
+  databaseURL: "https://estimator-5823-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "estimator-5823",
+  storageBucket: "estimator-5823.firebasestorage.app",
+  messagingSenderId: "1065304966389",
+  appId: "1:1065304966389:web:d31e0ef01b89c88484f1bc",
+  measurementId: "G-KE3EDJDVB6",
 };
 
 // Initialize Firebase
