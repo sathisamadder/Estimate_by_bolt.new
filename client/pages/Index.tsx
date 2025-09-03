@@ -34,6 +34,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { MobileLayout } from "@/components/MobileLayout";
 import { MobileItemGrid } from "@/components/MobileItemGrid";
 import { MobileTable } from "@/components/MobileTable";
+import { DatabaseService } from "@/lib/database";
 import {
   Building2,
   Calculator,
@@ -211,6 +212,9 @@ export default function Index() {
   const [projectName, setProjectName] = useState(
     "Sathisamadder - Estimates 20",
   );
+  const [firebaseProjectId, setFirebaseProjectId] = useState<string | null>(
+    null,
+  );
   const [clientInfo, setClientInfo] = useState({
     name: "",
     email: "",
@@ -279,16 +283,55 @@ export default function Index() {
   }, []);
 
   // Save data to localStorage
-  const saveData = useCallback(() => {
+  const saveData = useCallback(async () => {
     localStorage.setItem("construction-items", JSON.stringify(items));
     localStorage.setItem("custom-rates", JSON.stringify(customRates));
     localStorage.setItem("project-name", projectName);
     localStorage.setItem("client-info", JSON.stringify(clientInfo));
-    toast({
-      title: "Project Saved",
-      description: "Your project data has been saved locally.",
-    });
-  }, [items, customRates, projectName, clientInfo, toast]);
+
+    try {
+      const totalBudget = items
+        .map((i) => i.subtotal ?? i.totalCost)
+        .reduce((a, b) => a + b, 0);
+
+      if (clientInfo.name) {
+        await DatabaseService.createClient({
+          name: clientInfo.name,
+          email: clientInfo.email,
+          phone: clientInfo.phone,
+          address: clientInfo.address,
+        }).catch(() => {});
+      }
+
+      if (firebaseProjectId) {
+        await DatabaseService.updateProject(firebaseProjectId, {
+          name: projectName,
+          description: "",
+          client: clientInfo.name,
+          location: clientInfo.address,
+          items,
+          totalBudget,
+          customRates,
+        } as any);
+      } else {
+        const id = await DatabaseService.createProject({
+          name: projectName,
+          description: "",
+          client: clientInfo.name,
+          location: clientInfo.address,
+          items,
+          totalBudget,
+          customRates,
+        } as any);
+        setFirebaseProjectId(id);
+      }
+
+      toast({ title: "Project Saved", description: "Saved to Firebase." });
+    } catch (e) {
+      toast({ title: "Saved Locally", description: "Sync failed.", });
+      console.error(e);
+    }
+  }, [items, customRates, projectName, clientInfo, firebaseProjectId, toast]);
 
   // Calculate materials and cost for an item using centralized logic
   const calculateItem = useCallback(
