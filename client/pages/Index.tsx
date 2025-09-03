@@ -877,7 +877,7 @@ export default function Index() {
                   cat.items.map((it) => ({
                     id: it.id,
                     name: it.name,
-                    icon: cat.icon,
+                    icon: (ITEM_ICONS as any)[it.id] || cat.icon,
                     color: (cat as any).color,
                   })),
                 )}
