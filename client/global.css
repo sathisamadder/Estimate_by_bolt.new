@@ -48,18 +48,18 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    /* Construction company brand colors */
-    --brand-50: 31 100% 97%;
-    --brand-100: 31 100% 92%;
-    --brand-200: 31 100% 85%;
-    --brand-300: 30 100% 74%;
-    --brand-400: 27 96% 63%;
-    --brand-500: 24 85% 53%;
-    --brand-600: 20 85% 45%;
-    --brand-700: 17 85% 37%;
-    --brand-800: 15 79% 31%;
-    --brand-900: 15 75% 28%;
-    --brand-950: 13 88% 14%;
+    /* ROY brand blue */
+    --brand-50: 210 100% 97%;
+    --brand-100: 210 100% 94%;
+    --brand-200: 210 100% 88%;
+    --brand-300: 210 93% 77%;
+    --brand-400: 210 85% 60%;
+    --brand-500: 210 80% 45%;
+    --brand-600: 210 75% 40%;
+    --brand-700: 210 70% 35%;
+    --brand-800: 210 65% 28%;
+    --brand-900: 210 60% 22%;
+    --brand-950: 210 50% 12%;
 
     /* Construction specific colors */
     --construction-orange: 24 85% 53%;
