@@ -131,24 +131,34 @@ const CONSTRUCTION_ITEMS = {
       { id: "paint", name: "Paint Work", unit: "sft" },
     ],
   },
-  utilities: {
-    label: "Utility Works",
-    icon: Wrench,
-    color: "text-indigo-600",
-    bgColor: "bg-indigo-50",
-    items: [
-      { id: "plumbing", name: "Plumbing Work", unit: "point" },
-      { id: "electrical", name: "Electrical Work", unit: "point" },
-      { id: "hvac", name: "HVAC Work", unit: "point" },
-    ],
-  },
-  custom: {
-    label: "Custom",
-    icon: Package,
-    color: "text-pink-600",
-    bgColor: "bg-pink-50",
-    items: [{ id: "custom", name: "Custom Item", unit: "unit" }],
-  },
+} as const;
+
+// Item-level icons (fallback to category icon if not provided)
+const ITEM_ICONS: Record<string, any> = {
+  pile: Package,
+  pile_cap: Package,
+  mat_foundation: Layers,
+  footing: Layers,
+  combined_footing: Layers,
+  strap_footing: Layers,
+  strip_footing: Layers,
+  raft: Layers,
+  retaining_wall: Home,
+  water_reservoir: Package,
+  septic_tank: Package,
+  column: Building2,
+  beam: Layers,
+  slab: Layers,
+  stair: Activity,
+  lintel: Layers,
+  lift_core: Building2,
+  overhead_tank: Package,
+  brick_wall: Home,
+  block_wall: Home,
+  partition: Home,
+  plaster: Palette,
+  tiles: Palette,
+  paint: Palette,
 };
 
 // Default material rates (BDT)
