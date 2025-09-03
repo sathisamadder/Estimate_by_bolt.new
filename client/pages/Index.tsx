@@ -1038,9 +1038,9 @@ export default function Index() {
                       View detailed charts and analytics for better project
                       insights.
                     </p>
-                    <Button className="bg-brand-500 hover:bg-brand-600">
-                      View Analytics
-                    </Button>
+                    <Button className="bg-brand-500 hover:bg-brand-600" onClick={handlePrint}>
+                    View Analytics
+                  </Button>
                   </div>
                 </div>
               </CardContent>
@@ -1973,7 +1973,7 @@ export default function Index() {
                     View detailed charts and analytics for better project
                     insights.
                   </p>
-                  <Button className="bg-brand-500 hover:bg-brand-600">
+                  <Button className="bg-brand-500 hover:bg-brand-600" onClick={handlePrint}>
                     View Analytics
                   </Button>
                 </div>
