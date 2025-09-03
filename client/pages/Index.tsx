@@ -1156,9 +1156,24 @@ export default function Index() {
 
                   <div className="space-y-4">
                     <h4 className="font-medium">Reinforcement Details</h4>
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       <div>
-                        <Label htmlFor="mainBars">Main Bars (mm)</Label>
+                        <Label htmlFor="mainBarCount">Main Bars (nos)</Label>
+                        <Input
+                          id="mainBarCount"
+                          type="number"
+                          min="1"
+                          value={formData.mainBarCount}
+                          onChange={(e) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              mainBarCount: e.target.value,
+                            }))
+                          }
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="mainBars">Main Bar Dia (mm)</Label>
                         <Select
                           value={formData.mainBars}
                           onValueChange={(value) =>
@@ -1198,11 +1213,12 @@ export default function Index() {
                             <SelectItem value="6">6mm</SelectItem>
                             <SelectItem value="8">8mm</SelectItem>
                             <SelectItem value="10">10mm</SelectItem>
+                            <SelectItem value="12">12mm</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div>
-                        <Label htmlFor="spacing">Spacing (inch)</Label>
+                        <Label htmlFor="spacing">Stirrups Spacing (in)</Label>
                         <Input
                           id="spacing"
                           type="number"
@@ -1212,6 +1228,36 @@ export default function Index() {
                             setFormData((prev) => ({
                               ...prev,
                               spacing: e.target.value,
+                            }))
+                          }
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="clearCover">Clear Cover (in)</Label>
+                        <Input
+                          id="clearCover"
+                          type="number"
+                          placeholder="3"
+                          value={formData.clearCover}
+                          onChange={(e) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              clearCover: e.target.value,
+                            }))
+                          }
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="lapLength">Lap Length (in)</Label>
+                        <Input
+                          id="lapLength"
+                          type="number"
+                          placeholder="30"
+                          value={formData.lapLength}
+                          onChange={(e) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              lapLength: e.target.value,
                             }))
                           }
                         />
@@ -2048,9 +2094,24 @@ export default function Index() {
 
                   <div className="space-y-4">
                     <h4 className="font-medium">Reinforcement Details</h4>
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       <div>
-                        <Label htmlFor="mainBars">Main Bars (mm)</Label>
+                        <Label htmlFor="mainBarCount">Main Bars (nos)</Label>
+                        <Input
+                          id="mainBarCount"
+                          type="number"
+                          min="1"
+                          value={formData.mainBarCount}
+                          onChange={(e) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              mainBarCount: e.target.value,
+                            }))
+                          }
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="mainBars">Main Bar Dia (mm)</Label>
                         <Select
                           value={formData.mainBars}
                           onValueChange={(value) =>
@@ -2090,11 +2151,12 @@ export default function Index() {
                             <SelectItem value="6">6mm</SelectItem>
                             <SelectItem value="8">8mm</SelectItem>
                             <SelectItem value="10">10mm</SelectItem>
+                            <SelectItem value="12">12mm</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
                       <div>
-                        <Label htmlFor="spacing">Spacing (inch)</Label>
+                        <Label htmlFor="spacing">Stirrups Spacing (in)</Label>
                         <Input
                           id="spacing"
                           type="number"
@@ -2104,6 +2166,36 @@ export default function Index() {
                             setFormData((prev) => ({
                               ...prev,
                               spacing: e.target.value,
+                            }))
+                          }
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="clearCover">Clear Cover (in)</Label>
+                        <Input
+                          id="clearCover"
+                          type="number"
+                          placeholder="3"
+                          value={formData.clearCover}
+                          onChange={(e) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              clearCover: e.target.value,
+                            }))
+                          }
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="lapLength">Lap Length (in)</Label>
+                        <Input
+                          id="lapLength"
+                          type="number"
+                          placeholder="30"
+                          value={formData.lapLength}
+                          onChange={(e) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              lapLength: e.target.value,
                             }))
                           }
                         />
