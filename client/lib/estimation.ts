@@ -452,6 +452,13 @@ export interface DimensionsInput {
   thickness?: number;
   quantity?: number;
   multiple?: number;
+  // Reinforcement extras
+  mainBarCount?: number; // nos
+  mainBarDiaMm?: number; // mm
+  stirrupDiaMm?: number; // mm
+  stirrupSpacingIn?: number; // inches
+  clearCoverIn?: number; // inches
+  lapLengthIn?: number; // inches
 }
 
 export interface ComputedMaterials {
