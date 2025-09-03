@@ -397,8 +397,11 @@ export default function Index() {
       },
       reinforcement: {
         mainBars: parseFloat(formData.mainBars),
+        mainBarCount: parseFloat(formData.mainBarCount),
         stirrups: parseFloat(formData.stirrups),
         spacing: parseFloat(formData.spacing),
+        clearCover: parseFloat(formData.clearCover),
+        lapLength: parseFloat(formData.lapLength),
       },
       materials: calculations.materials,
       volume: calculations.volume,
@@ -497,8 +500,11 @@ export default function Index() {
       },
       reinforcement: {
         mainBars: parseFloat(formData.mainBars),
+        mainBarCount: parseFloat(formData.mainBarCount),
         stirrups: parseFloat(formData.stirrups),
         spacing: parseFloat(formData.spacing),
+        clearCover: parseFloat(formData.clearCover),
+        lapLength: parseFloat(formData.lapLength),
       },
       materials: calculations.materials,
       volume: calculations.volume,
