@@ -294,6 +294,12 @@ export default function Index() {
         thickness: parseFloat(data.thickness) || 0,
         quantity: parseFloat(data.quantity) || 1,
         multiple: data.isMultiple ? parseFloat(data.multipleQuantity) || 1 : 1,
+        mainBarCount: parseFloat(data.mainBarCount) || undefined,
+        mainBarDiaMm: parseFloat(data.mainBars) || undefined,
+        stirrupDiaMm: parseFloat(data.stirrups) || undefined,
+        stirrupSpacingIn: parseFloat(data.spacing) || undefined,
+        clearCoverIn: parseFloat(data.clearCover) || undefined,
+        lapLengthIn: parseFloat(data.lapLength) || undefined,
       } as any;
 
       const def = findItemDef(data.type);
