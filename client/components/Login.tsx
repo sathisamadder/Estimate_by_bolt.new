@@ -53,7 +53,7 @@ export function Login() {
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
             <motion.div
-              className="relative flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-500/10 to-brand-600/10"
+              className="relative flex items-center justify-center w-24 h-24 rounded-2xl bg-gradient-to-br from-brand-500/10 to-brand-600/10"
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -65,12 +65,12 @@ export function Login() {
                   duration: 3,
                   ease: "easeInOut",
                 }}
-                className="flex items-center justify-center w-12 h-12 rounded-xl bg-white shadow-sm"
+                className="flex items-center justify-center w-20 h-20 rounded-xl bg-white shadow-sm"
               >
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2F46361fbad51e408b89450daa00371588"
                   alt="ROY Logo"
-                  className="w-10 h-10 object-contain bg-transparent"
+                  className="w-16 h-16 object-contain bg-transparent"
                   style={{ background: "transparent", backdropFilter: "none" }}
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
