@@ -708,6 +708,15 @@ export default function Index() {
 
   // Export data
   const handleExport = () => {
+    if (!ratesConfirmed) {
+      setIsPricingOpen(true);
+      toast({
+        title: "Confirm Rates",
+        description: "Please enter and confirm current market rates before exporting the report.",
+      });
+      return;
+    }
+
     const exportData = {
       projectName,
       summary: projectSummary,
