@@ -173,6 +173,18 @@
     transition: box-shadow 180ms ease, transform 120ms ease, background-color 180ms ease;
   }
 
+  /* Input focus glow */
+  input:focus, textarea:focus {
+    box-shadow: 0 6px 30px rgba(59,130,246,0.12), 0 0 0 6px rgba(59,130,246,0.06);
+    border-color: rgba(59,130,246,0.8);
+  }
+
+  /* Card scale helper */
+  .card-scale {
+    transform: scale(var(--card-scale, 1));
+    transition: transform 220ms cubic-bezier(.16,.84,.44,1);
+  }
+
   /* Callout for primary actions: distinct from background */
   .primary-cta {
     background: linear-gradient(90deg, rgba(14,165,233,1) 0%, rgba(59,130,246,1) 100%);
