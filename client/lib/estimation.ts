@@ -712,6 +712,18 @@ export function computeItem(
   aggregate *= wastageFactor;
   steel *= wastageFactor;
 
+  // Compute brick equivalents for aggregate (if user wants crushed-brick estimation)
+  let bricksForAggregate = 0;
+  let khoyaCount = 0;
+  if (aggregate > 0) {
+    const bricksPerCft = rates.bricksPerAggregateCft ?? 200;
+    bricksForAggregate = Math.round(aggregate * bricksPerCft);
+    const perKhoya = rates.bricksPerKhoya ?? 11;
+    if (perKhoya > 0) {
+      khoyaCount = Math.round(bricksForAggregate / perKhoya);
+    }
+  }
+
   const cementCost = cement * rates.cement;
   const sandCost = sand * rates.sand;
   const aggregateCost = aggregate * rates.aggregate;
