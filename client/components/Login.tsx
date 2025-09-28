@@ -23,6 +23,10 @@ export function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // tilt state for 3D card
+  const [rx, setRx] = useState(0);
+  const [ry, setRy] = useState(0);
+
   const { login, register } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
