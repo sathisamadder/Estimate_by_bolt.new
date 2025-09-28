@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +15,8 @@ import { Calculator, Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
 
 export function Login() {
+  const [scale, setScale] = useState(1);
+  const [showScaleControl, setShowScaleControl] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
@@ -55,6 +58,19 @@ export function Login() {
       >
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
+            <div className="absolute right-4 top-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowScaleControl((s) => !s)}
+                className="p-2"
+                aria-label="Adjust card size"
+              >
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Button>
+            </div>
             <motion.div
               className="relative flex items-center justify-center w-24 h-24 rounded-2xl bg-gradient-to-br from-brand-500/10 to-brand-600/10"
               initial={{ scale: 0.9, opacity: 0 }}
@@ -97,6 +113,24 @@ export function Login() {
         </CardHeader>
 
         <CardContent>
+          {showScaleControl && (
+            <div className="p-3">
+              <Label>Card Scale</Label>
+              <div className="flex items-center space-x-3">
+                <input
+                  aria-label="Card scale"
+                  type="range"
+                  min={0.8}
+                  max={1.2}
+                  step={0.01}
+                  value={scale}
+                  onChange={(e) => setScale(parseFloat(e.target.value))}
+                  className="w-full"
+                />
+                <div className="w-12 text-sm text-right">{(scale * 100).toFixed(0)}%</div>
+              </div>
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
               <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
