@@ -62,6 +62,10 @@ export const DEFAULT_RATES: EstimationRates = {
   mortarMix: { c: 1, s: 5 },
   brickPerCft: 11.43,
   steelFactor: 1,
+  // Defaults: bricks needed to create 1 cft of aggregate when crushed (estimate, overrideable)
+  bricksPerAggregateCft: 200,
+  // Approximate bricks per 'khoya' as per local practice
+  bricksPerKhoya: 11,
 };
 
 export const CATEGORIES: Record<string, Category> = {
