@@ -31,7 +31,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAuth } from "@/contexts/AuthContext";
-const MobileLayout = lazy(() => import("@/components/MobileLayout").then((m) => ({ default: m.MobileLayout })));
+import { MobileLayout } from "@/components/MobileLayout";
 import { MobileItemGrid } from "@/components/MobileItemGrid";
 import { MobileTable } from "@/components/MobileTable";
 import { DatabaseService } from "@/lib/database";
