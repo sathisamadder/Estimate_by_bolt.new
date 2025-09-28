@@ -746,6 +746,15 @@ export default function Index() {
 
   // Print report
   const handlePrint = () => {
+    if (!ratesConfirmed) {
+      setIsPricingOpen(true);
+      toast({
+        title: "Confirm Rates",
+        description: "Please enter and confirm current market rates before printing the report.",
+      });
+      return;
+    }
+
     window.print();
     toast({
       title: "Print Ready",
