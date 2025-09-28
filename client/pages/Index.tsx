@@ -692,9 +692,9 @@ export default function Index() {
           ? item.dimensions.length * item.dimensions.width
           : undefined,
       unit:
-        Object.values(CONSTRUCTION_ITEMS)
-          .flatMap((cat) => cat.items)
-          .find((i) => i.name === item.type)?.unit || "cft",
+        (Object.values(CONSTRUCTION_ITEMS) as any)
+          .flatMap((cat: any) => (cat as any).items)
+          .find((i: any) => i.name === item.type)?.unit || "cft",
     };
   });
 
