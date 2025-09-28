@@ -41,6 +41,8 @@ export interface EstimationRates {
   mortarMix: { c: number; s: number }; // e.g., 1:5
   brickPerCft: number; // nos per cft of wall volume
   steelFactor: number; // multiplier for steel coefficients
+  bricksPerAggregateCft?: number; // if using crushed bricks as aggregate, bricks needed per cft
+  bricksPerKhoya?: number; // bricks per small 'khoya' unit
 }
 
 export const DEFAULT_RATES: EstimationRates = {
