@@ -1751,7 +1751,8 @@ export default function Index() {
               </Button>
               <Button
                 onClick={() => setIsAddDialogOpen(true)}
-                className="bg-brand-500 hover:bg-brand-600"
+                variant="threeD"
+                className="flex items-center"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Item
