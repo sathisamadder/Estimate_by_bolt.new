@@ -506,9 +506,9 @@ export default function Index() {
     setEditingItem(item);
     setFormData({
       type:
-        Object.values(CONSTRUCTION_ITEMS)
-          .flatMap((cat) => cat.items)
-          .find((i) => i.name === item.type)?.id || "",
+        (Object.values(CONSTRUCTION_ITEMS) as any)
+          .flatMap((cat: any) => (cat as any).items)
+          .find((i: any) => i.name === item.type)?.id || "",
       category: item.category,
       description: item.description,
       length: item.dimensions.length.toString(),
@@ -876,8 +876,8 @@ export default function Index() {
 
               {/* Quick pick grid */}
               <MobileItemGrid
-                items={Object.entries(CONSTRUCTION_ITEMS).flatMap(([_, cat]) =>
-                  cat.items.map((it) => ({
+                items={(Object.entries(CONSTRUCTION_ITEMS) as any).flatMap(([_, cat]: any) =>
+                  (cat as any).items.map((it: any) => ({
                     id: it.id,
                     name: it.name,
                     icon: (ITEM_ICONS as any)[it.id] || cat.icon,
