@@ -65,6 +65,7 @@ import {
   Package,
   Clock,
 } from "lucide-react";
+import ReportTable from "@/components/ReportTable";
 import {
   computeItem,
   getUnitLabel,
