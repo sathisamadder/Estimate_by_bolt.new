@@ -482,7 +482,9 @@ export interface DimensionsInput {
 export interface ComputedMaterials {
   volume: number; // cft
   area: number; // sft for finishes/walls display
-  bricks: number; // nos
+  bricks: number; // nos (fresh bricks for masonry)
+  bricksForAggregate?: number; // nos (if crushed bricks used to make aggregate)
+  khoyaCount?: number; // number of 'khoya' units
   cement: number; // bags
   sand: number; // cft
   aggregate: number; // cft
