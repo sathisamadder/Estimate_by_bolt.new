@@ -29,6 +29,25 @@ export function Login() {
 
   const { login, register } = useAuth();
 
+  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = e.currentTarget as HTMLDivElement;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const px = x / rect.width;
+    const py = y / rect.height;
+    const max = 8; // degrees
+    const newRy = (px - 0.5) * max * -1;
+    const newRx = (py - 0.5) * max;
+    setRx(newRx);
+    setRy(newRy);
+  };
+
+  const handleLeave = () => {
+    setRx(0);
+    setRy(0);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
