@@ -264,6 +264,7 @@ export default function Index() {
   useEffect(() => {
     const savedItems = localStorage.getItem("construction-items");
     const savedRates = localStorage.getItem("custom-rates");
+    const savedRatesConfirmed = localStorage.getItem("rates_confirmed") === "true";
     const savedProject = localStorage.getItem("project-name");
     const savedClient = localStorage.getItem("client-info");
 
@@ -281,6 +282,12 @@ export default function Index() {
       } catch (error) {
         console.error("Error loading rates:", error);
       }
+    }
+
+    // restore confirmation flag and prompt user to confirm market rates if missing
+    setRatesConfirmed(savedRatesConfirmed);
+    if (!savedRates || !savedRatesConfirmed) {
+      setIsPricingOpen(true);
     }
 
     if (savedProject) {
