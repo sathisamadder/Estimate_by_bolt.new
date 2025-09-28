@@ -219,6 +219,7 @@ export default function Index() {
   const [isPricingOpen, setIsPricingOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<EstimateItem | null>(null);
   const [customRates, setCustomRates] = useState(DEFAULT_RATES);
+  const [ratesConfirmed, setRatesConfirmed] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [sortBy, setSortBy] = useState("date");
