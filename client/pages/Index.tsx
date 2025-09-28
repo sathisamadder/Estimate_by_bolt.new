@@ -1682,6 +1682,8 @@ export default function Index() {
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2F46361fbad51e408b89450daa00371588"
                   alt="ROY Logo"
+                  loading="lazy"
+                  decoding="async"
                   className="w-8 h-8 object-contain bg-transparent"
                   style={{ background: "transparent", backdropFilter: "none" }}
                   onError={(e) => {
