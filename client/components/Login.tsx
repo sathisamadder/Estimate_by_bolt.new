@@ -70,6 +70,8 @@ export function Login() {
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F60f84872b4b14093aa9e83d9ad74d969%2Fc1fba5ea5cf94244b8c69f5e5c441958?format=webp&width=800"
                   alt="ROY Construction Logo"
+                  loading="lazy"
+                  decoding="async"
                   className="w-16 h-16 object-contain bg-transparent"
                   style={{ background: "transparent", backdropFilter: "none" }}
                   onError={(e) => {
