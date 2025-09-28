@@ -58,6 +58,8 @@ export const ReportTable: React.FC<ReportTableProps> = ({ items, rates, formatBD
       volume: comp.materials.volume,
       area: comp.materials.area,
       bricks: Math.round(comp.materials.bricks || 0),
+      bricksForAggregate: Math.round(comp.materials.bricksForAggregate || 0),
+      khoyaCount: Math.round(comp.materials.khoyaCount || 0),
       cement: Number((comp.materials.cement || 0).toFixed(2)),
       sand: Number((comp.materials.sand || 0).toFixed(2)),
       aggregate: Number((comp.materials.aggregate || 0).toFixed(2)),
@@ -74,10 +76,12 @@ export const ReportTable: React.FC<ReportTableProps> = ({ items, rates, formatBD
       acc.aggregate += r.aggregate;
       acc.steel += r.steel;
       acc.bricks += r.bricks;
+      acc.bricksForAggregate += r.bricksForAggregate || 0;
+      acc.khoyaCount += r.khoyaCount || 0;
       acc.subtotal += r.subtotal;
       return acc;
     },
-    { volume: 0, cement: 0, sand: 0, aggregate: 0, steel: 0, bricks: 0, subtotal: 0 },
+    { volume: 0, cement: 0, sand: 0, aggregate: 0, steel: 0, bricks: 0, bricksForAggregate: 0, khoyaCount: 0, subtotal: 0 },
   );
 
   return (
@@ -100,6 +104,8 @@ export const ReportTable: React.FC<ReportTableProps> = ({ items, rates, formatBD
             <th className="p-2 text-left">Item</th>
             <th className="p-2 text-right">Volume (cft)</th>
             <th className="p-2 text-right">Bricks</th>
+            <th className="p-2 text-right">Bricks→Agg (nos)</th>
+            <th className="p-2 text-right">Khoya</th>
             <th className="p-2 text-right">Cement (bags)</th>
             <th className="p-2 text-right">Sand (cft)</th>
             <th className="p-2 text-right">Aggregate (cft)</th>
@@ -113,6 +119,8 @@ export const ReportTable: React.FC<ReportTableProps> = ({ items, rates, formatBD
               <td className="p-2">{r.name}</td>
               <td className="p-2 text-right">{r.volume.toFixed(3)}</td>
               <td className="p-2 text-right">{r.bricks}</td>
+              <td className="p-2 text-right">{r.bricksForAggregate}</td>
+              <td className="p-2 text-right">{r.khoyaCount}</td>
               <td className="p-2 text-right">{r.cement}</td>
               <td className="p-2 text-right">{r.sand}</td>
               <td className="p-2 text-right">{r.aggregate}</td>
@@ -126,6 +134,8 @@ export const ReportTable: React.FC<ReportTableProps> = ({ items, rates, formatBD
             <td className="p-2">Total</td>
             <td className="p-2 text-right">{totals.volume.toFixed(3)}</td>
             <td className="p-2 text-right">{totals.bricks}</td>
+            <td className="p-2 text-right">{totals.bricksForAggregate}</td>
+            <td className="p-2 text-right">{totals.khoyaCount}</td>
             <td className="p-2 text-right">{totals.cement.toFixed(2)}</td>
             <td className="p-2 text-right">{totals.sand.toFixed(2)}</td>
             <td className="p-2 text-right">{totals.aggregate.toFixed(2)}</td>
