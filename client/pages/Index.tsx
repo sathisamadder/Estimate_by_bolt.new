@@ -2965,11 +2965,30 @@ export default function Index() {
               >
                 Reset to Default
               </Button>
+
+              <Button
+                className="bg-brand-500 hover:bg-brand-600"
+                onClick={() => {
+                  try {
+                    localStorage.setItem("custom-rates", JSON.stringify(customRates));
+                    localStorage.setItem("rates_confirmed", "true");
+                    setRatesConfirmed(true);
+                    setIsPricingOpen(false);
+                    toast({ title: "Rates Saved", description: "Market rates saved and confirmed for this project." });
+                  } catch (e) {
+                    console.error(e);
+                    toast({ title: "Save Failed", description: "Unable to save market rates locally." });
+                  }
+                }}
+              >
+                Save & Confirm Rates
+              </Button>
+
               <Button
                 onClick={() => setIsPricingOpen(false)}
-                className="bg-brand-500 hover:bg-brand-600"
+                variant="outline"
               >
-                Save Settings
+                Close
               </Button>
             </div>
           </div>
