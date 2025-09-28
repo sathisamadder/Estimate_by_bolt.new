@@ -1,7 +1,11 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
+
+// NOTE: we intentionally do NOT import firebase/analytics at module top-level.
+// Importing firebase/analytics eagerly can trigger network calls during SSR or
+// dev server hot-reloads which sometimes leads to "body stream already read"
+// errors in the analytics package. Instead provide a lazy initializer.
 
 // Firebase configuration - switched to estimator-5823 as requested
 const firebaseConfig = {
@@ -25,15 +29,31 @@ export const db = getFirestore(app);
 // Initialize Auth
 export const auth = getAuth(app);
 
-// Initialize Analytics (guard against unsupported environments)
-export const analytics = (() => {
+// Lazy initializer for Analytics. Call this from client-only code when you
+// actually need analytics. It memoizes the instance on window to avoid
+// duplicate initialization and the associated errors.
+export async function initAnalytics(): Promise<any | null> {
   if (typeof window === "undefined") return null;
+  const win = window as any;
+  if (win.__firebase_analytics_instance) return win.__firebase_analytics_instance;
   try {
-    return getAnalytics(app);
+    const analyticsModule = await import("firebase/analytics");
+    // Check support if available
+    if (typeof analyticsModule.isSupported === "function") {
+      try {
+        const supported = await analyticsModule.isSupported();
+        if (!supported) return null;
+      } catch (err) {
+        // ignore and attempt to initialize
+      }
+    }
+    const instance = analyticsModule.getAnalytics(app);
+    win.__firebase_analytics_instance = instance;
+    return instance;
   } catch (e) {
     console.warn("Analytics disabled:", e);
     return null;
   }
-})();
+}
 
 export default app;
