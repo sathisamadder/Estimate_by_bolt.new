@@ -14,7 +14,7 @@ const buttonVariants = cva(
         destructive:
           "text-white bg-gradient-to-br from-red-500 to-red-600 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_10px_20px_-5px_rgba(0,0,0,0.25)] ring-1 ring-white/20 hover:brightness-105",
         outline:
-          "text-foreground bg-white/30 ring-1 ring-white/40 border border-white/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_8px_24px_rgba(0,0,0,0.08)] hover:bg-white/40",
+          "text-foreground backdrop-blur-sm bg-white/20 dark:bg-black/20 ring-1 ring-white/30 border border-white/20 shadow-sm hover:bg-white/30 dark:hover:bg-black/30",
         secondary:
           "text-foreground bg-white/60 dark:bg-white/10 ring-1 ring-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_8px_24px_rgba(0,0,0,0.12)] hover:bg-white/70 dark:hover:bg-white/15",
         ghost: "text-foreground bg-transparent hover:bg-white/20",
