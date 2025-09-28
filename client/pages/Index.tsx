@@ -264,7 +264,8 @@ export default function Index() {
   useEffect(() => {
     const savedItems = localStorage.getItem("construction-items");
     const savedRates = localStorage.getItem("custom-rates");
-    const savedRatesConfirmed = localStorage.getItem("rates_confirmed") === "true";
+    const savedRatesConfirmed =
+      localStorage.getItem("rates_confirmed") === "true";
     const savedProject = localStorage.getItem("project-name");
     const savedClient = localStorage.getItem("client-info");
 
@@ -712,7 +713,8 @@ export default function Index() {
       setIsPricingOpen(true);
       toast({
         title: "Confirm Rates",
-        description: "Please enter and confirm current market rates before exporting the report.",
+        description:
+          "Please enter and confirm current market rates before exporting the report.",
       });
       return;
     }
@@ -750,7 +752,8 @@ export default function Index() {
       setIsPricingOpen(true);
       toast({
         title: "Confirm Rates",
-        description: "Please enter and confirm current market rates before printing the report.",
+        description:
+          "Please enter and confirm current market rates before printing the report.",
       });
       return;
     }
@@ -902,13 +905,14 @@ export default function Index() {
 
               {/* Quick pick grid */}
               <MobileItemGrid
-                items={(Object.entries(CONSTRUCTION_ITEMS) as any).flatMap(([_, cat]: any) =>
-                  (cat as any).items.map((it: any) => ({
-                    id: it.id,
-                    name: it.name,
-                    icon: (ITEM_ICONS as any)[it.id] || cat.icon,
-                    color: (cat as any).color,
-                  })),
+                items={(Object.entries(CONSTRUCTION_ITEMS) as any).flatMap(
+                  ([_, cat]: any) =>
+                    (cat as any).items.map((it: any) => ({
+                      id: it.id,
+                      name: it.name,
+                      icon: (ITEM_ICONS as any)[it.id] || cat.icon,
+                      color: (cat as any).color,
+                    })),
                 )}
                 onPick={(id) => {
                   setFormData((p) => ({ ...p, type: id }));
@@ -1049,9 +1053,17 @@ export default function Index() {
                       Generate comprehensive project reports with material
                       breakdowns and cost analysis.
                     </p>
-                    <Suspense fallback={<div className="p-4 text-center">Loading report…</div>}>
-                    <ReportTable items={items} rates={customRates as any} formatBDT={formatBDT} />
-                  </Suspense>
+                    <Suspense
+                      fallback={
+                        <div className="p-4 text-center">Loading report…</div>
+                      }
+                    >
+                      <ReportTable
+                        items={items}
+                        rates={customRates as any}
+                        formatBDT={formatBDT}
+                      />
+                    </Suspense>
                   </div>
                 </div>
               </CardContent>
@@ -1723,14 +1735,24 @@ export default function Index() {
                   className="bg-brand-500 hover:bg-brand-600"
                   onClick={() => {
                     try {
-                      localStorage.setItem("custom-rates", JSON.stringify(customRates));
+                      localStorage.setItem(
+                        "custom-rates",
+                        JSON.stringify(customRates),
+                      );
                       localStorage.setItem("rates_confirmed", "true");
                       setRatesConfirmed(true);
                       setIsPricingOpen(false);
-                      toast({ title: "Rates Saved", description: "Market rates saved and confirmed for this project." });
+                      toast({
+                        title: "Rates Saved",
+                        description:
+                          "Market rates saved and confirmed for this project.",
+                      });
                     } catch (e) {
                       console.error(e);
-                      toast({ title: "Save Failed", description: "Unable to save market rates locally." });
+                      toast({
+                        title: "Save Failed",
+                        description: "Unable to save market rates locally.",
+                      });
                     }
                   }}
                 >
@@ -1791,7 +1813,10 @@ export default function Index() {
                     currentUser?.photoURL ||
                     (currentUser?.email
                       ? `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                          (currentUser.email.split("@")[0] || "User").replace(/\W+/g, "+"),
+                          (currentUser.email.split("@")[0] || "User").replace(
+                            /\W+/g,
+                            "+",
+                          ),
                         )}&background=0D9488&color=ffffff&size=128&rounded=true`
                       : `https://ui-avatars.com/api/?name=User&background=0D9488&color=ffffff&size=128&rounded=true`)
                   }
@@ -1800,7 +1825,9 @@ export default function Index() {
                 />
                 <div className="text-right">
                   <p className="text-sm text-gray-600">Welcome back</p>
-                  <p className="font-medium text-gray-900">{currentUser?.email}</p>
+                  <p className="font-medium text-gray-900">
+                    {currentUser?.email}
+                  </p>
                 </div>
               </div>
 
@@ -2983,24 +3010,31 @@ export default function Index() {
                 className="bg-brand-500 hover:bg-brand-600"
                 onClick={() => {
                   try {
-                    localStorage.setItem("custom-rates", JSON.stringify(customRates));
+                    localStorage.setItem(
+                      "custom-rates",
+                      JSON.stringify(customRates),
+                    );
                     localStorage.setItem("rates_confirmed", "true");
                     setRatesConfirmed(true);
                     setIsPricingOpen(false);
-                    toast({ title: "Rates Saved", description: "Market rates saved and confirmed for this project." });
+                    toast({
+                      title: "Rates Saved",
+                      description:
+                        "Market rates saved and confirmed for this project.",
+                    });
                   } catch (e) {
                     console.error(e);
-                    toast({ title: "Save Failed", description: "Unable to save market rates locally." });
+                    toast({
+                      title: "Save Failed",
+                      description: "Unable to save market rates locally.",
+                    });
                   }
                 }}
               >
                 Save & Confirm Rates
               </Button>
 
-              <Button
-                onClick={() => setIsPricingOpen(false)}
-                variant="outline"
-              >
+              <Button onClick={() => setIsPricingOpen(false)} variant="outline">
                 Close
               </Button>
             </div>

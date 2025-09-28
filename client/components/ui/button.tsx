@@ -19,7 +19,8 @@ const buttonVariants = cva(
           "text-foreground bg-white/60 dark:bg-white/10 ring-1 ring-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_8px_24px_rgba(0,0,0,0.12)] hover:bg-white/70 dark:hover:bg-white/15",
         ghost: "text-foreground bg-transparent hover:bg-white/20",
         link: "text-brand-600 underline-offset-4 hover:underline",
-        threeD: "text-white bg-gradient-to-b from-brand-500 to-brand-600 shadow-[0_18px_30px_-12px_rgba(10,27,59,0.45),0_6px_18px_-8px_rgba(14,165,233,0.12)] transform-gpu hover:translate-y-[-2px] active:translate-y-[1px]",
+        threeD:
+          "text-white bg-gradient-to-b from-brand-500 to-brand-600 shadow-[0_18px_30px_-12px_rgba(10,27,59,0.45),0_6px_18px_-8px_rgba(14,165,233,0.12)] transform-gpu hover:translate-y-[-2px] active:translate-y-[1px]",
       },
       size: {
         default: "h-10 px-4 py-2",

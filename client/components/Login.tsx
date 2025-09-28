@@ -82,7 +82,13 @@ export function Login() {
       >
         <Card
           className="w-full max-w-md shadow-xl card-scale login-3d-card"
-          style={{ "--card-scale": scale, "--rx": rx + "deg", "--ry": ry + "deg" } as React.CSSProperties}
+          style={
+            {
+              "--card-scale": scale,
+              "--rx": rx + "deg",
+              "--ry": ry + "deg",
+            } as React.CSSProperties
+          }
         >
           <CardHeader className="text-center">
             <div className="flex items-center justify-center mb-4 relative">
@@ -95,7 +101,13 @@ export function Login() {
                   aria-label="Adjust card size"
                 >
                   <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none">
-                    <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path
+                      d="M4 7h16M4 12h16M4 17h16"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 </Button>
               </div>
@@ -108,7 +120,11 @@ export function Login() {
               >
                 <motion.div
                   animate={{ y: [0, -4, 0] }}
-                  transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 3,
+                    ease: "easeInOut",
+                  }}
                   className="flex items-center justify-center w-20 h-20 rounded-xl bg-white shadow-sm"
                 >
                   <img
@@ -117,17 +133,27 @@ export function Login() {
                     loading="lazy"
                     decoding="async"
                     className="w-16 h-16 object-contain bg-transparent"
-                    style={{ background: "transparent", backdropFilter: "none" }}
+                    style={{
+                      background: "transparent",
+                      backdropFilter: "none",
+                    }}
                     onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).style.display = "none";
+                      (e.currentTarget as HTMLImageElement).style.display =
+                        "none";
                     }}
                   />
                 </motion.div>
               </motion.div>
             </div>
 
-            <CardTitle className="text-2xl font-bold text-gray-900">ROY</CardTitle>
-            <CardDescription>{isRegistering ? "Create your account" : "Sign in to your account"}</CardDescription>
+            <CardTitle className="text-2xl font-bold text-gray-900">
+              ROY
+            </CardTitle>
+            <CardDescription>
+              {isRegistering
+                ? "Create your account"
+                : "Sign in to your account"}
+            </CardDescription>
           </CardHeader>
 
           <CardContent>
@@ -145,39 +171,82 @@ export function Login() {
                     onChange={(e) => setScale(parseFloat(e.target.value))}
                     className="w-full"
                   />
-                  <div className="w-12 text-sm text-right">{(scale * 100).toFixed(0)}%</div>
+                  <div className="w-12 text-sm text-right">
+                    {(scale * 100).toFixed(0)}%
+                  </div>
                 </div>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
-                <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">{error}</div>
+                <div className="p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
+                  {error}
+                </div>
               )}
 
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} required autoFocus />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoFocus
+                />
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <div className="relative">
-                  <Input id="password" type={showPassword ? "text" : "password"} placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required className="pr-10" />
-                  <button type="button" className="absolute inset-y-0 right-0 pr-3 flex items-center" onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <EyeOff className="h-4 w-4 text-gray-400" /> : <Eye className="h-4 w-4 text-gray-400" />}
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4 text-gray-400" />
+                    ) : (
+                      <Eye className="h-4 w-4 text-gray-400" />
+                    )}
                   </button>
                 </div>
               </div>
 
-              <Button type="submit" className="w-full bg-brand-500 hover:bg-brand-600" disabled={loading}>
-                {loading ? <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full mr-2" /> : null}
+              <Button
+                type="submit"
+                className="w-full bg-brand-500 hover:bg-brand-600"
+                disabled={loading}
+              >
+                {loading ? (
+                  <div className="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full mr-2" />
+                ) : null}
                 {isRegistering ? "Create Account" : "Sign In"}
               </Button>
 
               <div className="text-center space-y-2">
-                <button type="button" className="text-sm text-brand-600 hover:text-brand-700" onClick={() => { setIsRegistering(!isRegistering); setError(""); }}>
-                  {isRegistering ? "Already have an account? Sign in" : "Don't have an account? Create one"}
+                <button
+                  type="button"
+                  className="text-sm text-brand-600 hover:text-brand-700"
+                  onClick={() => {
+                    setIsRegistering(!isRegistering);
+                    setError("");
+                  }}
+                >
+                  {isRegistering
+                    ? "Already have an account? Sign in"
+                    : "Don't have an account? Create one"}
                 </button>
               </div>
             </form>

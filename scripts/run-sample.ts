@@ -45,4 +45,4 @@ printResult("Pile (D=1ft L=20ft)", {
   total: pile.totalWithAdjustments,
 });
 
-console.log('\n-- Completed sample calculations --');
+console.log("\n-- Completed sample calculations --");

@@ -35,7 +35,8 @@ export const auth = getAuth(app);
 export async function initAnalytics(): Promise<any | null> {
   if (typeof window === "undefined") return null;
   const win = window as any;
-  if (win.__firebase_analytics_instance) return win.__firebase_analytics_instance;
+  if (win.__firebase_analytics_instance)
+    return win.__firebase_analytics_instance;
   try {
     const analyticsModule = await import("firebase/analytics");
     // Check support if available

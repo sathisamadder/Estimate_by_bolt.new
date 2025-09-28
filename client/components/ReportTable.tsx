@@ -48,7 +48,11 @@ function toNumericDims(d: DimensionsRaw) {
   };
 }
 
-export const ReportTable: React.FC<ReportTableProps> = ({ items, rates, formatBDT }) => {
+export const ReportTable: React.FC<ReportTableProps> = ({
+  items,
+  rates,
+  formatBDT,
+}) => {
   const rows = items.map((it) => {
     const dims = toNumericDims(it.dimensions);
     const comp = computeItem(it.itemId, dims as any, rates as any);
@@ -81,7 +85,17 @@ export const ReportTable: React.FC<ReportTableProps> = ({ items, rates, formatBD
       acc.subtotal += r.subtotal;
       return acc;
     },
-    { volume: 0, cement: 0, sand: 0, aggregate: 0, steel: 0, bricks: 0, bricksForAggregate: 0, khoyaCount: 0, subtotal: 0 },
+    {
+      volume: 0,
+      cement: 0,
+      sand: 0,
+      aggregate: 0,
+      steel: 0,
+      bricks: 0,
+      bricksForAggregate: 0,
+      khoyaCount: 0,
+      subtotal: 0,
+    },
   );
 
   return (
