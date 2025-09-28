@@ -1629,7 +1629,7 @@ export default function Index() {
                   </div>
                 </div>
                 <div>
-                  <Label htmlFor="bpc">Bricks per cft</Label>
+                  <Label htmlFor="bpc">Bricks per cft (wall)</Label>
                   <Input
                     id="bpc"
                     type="number"
@@ -1639,6 +1639,36 @@ export default function Index() {
                       setCustomRates((p: any) => ({
                         ...p,
                         brickPerCft: parseFloat(e.target.value) || 0,
+                      }))
+                    }
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="brAgg">Bricks per Aggregate cft</Label>
+                  <Input
+                    id="brAgg"
+                    type="number"
+                    step="1"
+                    value={customRates.bricksPerAggregateCft || 200}
+                    onChange={(e) =>
+                      setCustomRates((p: any) => ({
+                        ...p,
+                        bricksPerAggregateCft: parseInt(e.target.value) || 0,
+                      }))
+                    }
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="brKhoya">Bricks per Khoya</Label>
+                  <Input
+                    id="brKhoya"
+                    type="number"
+                    step="1"
+                    value={customRates.bricksPerKhoya || 11}
+                    onChange={(e) =>
+                      setCustomRates((p: any) => ({
+                        ...p,
+                        bricksPerKhoya: parseInt(e.target.value) || 0,
                       }))
                     }
                   />
