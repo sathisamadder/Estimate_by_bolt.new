@@ -1022,12 +1022,7 @@ export default function Index() {
                       Generate comprehensive project reports with material
                       breakdowns and cost analysis.
                     </p>
-                    <Button
-                      className="bg-brand-500 hover:bg-brand-600"
-                      onClick={handlePrint}
-                    >
-                      Generate Report
-                    </Button>
+                    <ReportTable items={items} rates={customRates as any} formatBDT={formatBDT} />
                   </div>
                 </div>
               </CardContent>
