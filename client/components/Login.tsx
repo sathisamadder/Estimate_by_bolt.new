@@ -49,7 +49,10 @@ export function Login() {
 
   return (
     <div className="min-h-dvh gpt5-gradient flex items-center justify-center p-6">
-      <Card className="w-full max-w-md shadow-xl">
+      <Card
+        className="w-full max-w-md shadow-xl card-scale"
+        style={{ "--card-scale": scale } as React.CSSProperties}
+      >
         <CardHeader className="text-center">
           <div className="flex items-center justify-center mb-4">
             <motion.div
