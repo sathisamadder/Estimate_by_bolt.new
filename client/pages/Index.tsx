@@ -1785,12 +1785,25 @@ export default function Index() {
             </div>
 
             <div className="flex items-center space-x-4">
-              <div className="text-right">
-                <p className="text-sm text-gray-600">Welcome back</p>
-                <p className="font-medium text-gray-900">
-                  {currentUser?.email}
-                </p>
+              <div className="flex items-center space-x-3">
+                <img
+                  src={
+                    currentUser?.photoURL ||
+                    (currentUser?.email
+                      ? `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                          (currentUser.email.split("@")[0] || "User").replace(/\W+/g, "+"),
+                        )}&background=0D9488&color=ffffff&size=128&rounded=true`
+                      : `https://ui-avatars.com/api/?name=User&background=0D9488&color=ffffff&size=128&rounded=true`)
+                  }
+                  alt="avatar"
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                <div className="text-right">
+                  <p className="text-sm text-gray-600">Welcome back</p>
+                  <p className="font-medium text-gray-900">{currentUser?.email}</p>
+                </div>
               </div>
+
               <Button
                 variant="outline"
                 onClick={() => logout().catch(console.error)}
