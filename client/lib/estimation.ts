@@ -744,6 +744,8 @@ export function computeItem(
       volume,
       area,
       bricks,
+      bricksForAggregate,
+      khoyaCount,
       cement,
       sand,
       aggregate,
