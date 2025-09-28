@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen gpt5-gradient">
       {/* Navigation Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm">
+      <header className="glass-navbar">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center space-x-3">
             <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-600 rounded-lg">
