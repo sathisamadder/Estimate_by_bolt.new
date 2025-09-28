@@ -65,7 +65,7 @@ import {
   Package,
   Clock,
 } from "lucide-react";
-import ReportTable from "@/components/ReportTable";
+const ReportTable = lazy(() => import("@/components/ReportTable"));
 import {
   computeItem,
   getUnitLabel,
@@ -1023,7 +1023,9 @@ export default function Index() {
                       Generate comprehensive project reports with material
                       breakdowns and cost analysis.
                     </p>
+                    <Suspense fallback={<div className="p-4 text-center">Loading report…</div>}>
                     <ReportTable items={items} rates={customRates as any} formatBDT={formatBDT} />
+                  </Suspense>
                   </div>
                 </div>
               </CardContent>
