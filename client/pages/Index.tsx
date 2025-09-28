@@ -1674,7 +1674,7 @@ export default function Index() {
   return (
     <div className="min-h-screen gpt5-gradient">
       {/* Desktop Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm shadow-sm">
+      <header className="glass-navbar">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
