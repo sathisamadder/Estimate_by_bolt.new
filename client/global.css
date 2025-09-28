@@ -157,6 +157,22 @@
     box-shadow: 0 6px 30px rgba(0,0,0,0.45);
   }
 
+  /* Card entrance animation */
+  .card-entrance {
+    animation: card-pop 700ms cubic-bezier(.16,.84,.44,1) both;
+  }
+
+  @keyframes card-pop {
+    0% { opacity: 0; transform: translateY(6px) scale(0.995); }
+    60% { opacity: 1; transform: translateY(-2px) scale(1.002); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Smooth input and button transitions */
+  input, textarea, select, .btn, .button {
+    transition: box-shadow 180ms ease, transform 120ms ease, background-color 180ms ease;
+  }
+
   /* Callout for primary actions: distinct from background */
   .primary-cta {
     background: linear-gradient(90deg, rgba(14,165,233,1) 0%, rgba(59,130,246,1) 100%);
